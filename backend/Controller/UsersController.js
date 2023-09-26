@@ -1,47 +1,49 @@
-import Users from "../Models/Users.js";
+const Users = require("../Models/Users");
 
-export const getUserById = async(req, res) => {
-    const {userId} = req.body
-    try{
-        const response = await Users.findById(userId)
-        if(!response){
-            return res.status(400).json({message: "User Not Found"})
-        }
-        return res.status(200).json(response)
+const getUserById = async (req, res) => {
+  const { userId } = req.params.id;
+  try {
+    const response = await Users.findById(userId);
+    console.log(response);
+    if (!response) {
+      return res.status(400).json({ message: "User Not Found" });
     }
-    catch{
-        return res.status(500).json({message: "Internal Server Error"})
-    }
-}
+    return res.status(200).json(response);
+  } catch {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
-export const updateUserById = async(req, res) => {
-    const {userId} = req.body
-    try{
-        const response = await Users.findByIdAndUpdate(userId, req.body, {
-            new: true
-        })
-        if(!response){
-           return res.status(400).json({message: "User Not Found"})
-        }
-        return res.status(200).json(response)
+const updateUserById = async (req, res) => {
+  const { userId } = req.params.id;
+  try {
+    const response = await Users.findByIdAndUpdate(userId, req.body, {
+      new: true,
+    });
+    if (!response) {
+      return res.status(400).json({ message: "User Not Found" });
     }
-    catch{
-        return res.status(500).json({message : "Internal Server Error"})
-    }
-}
+    return res.status(200).json(response);
+  } catch {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
-export const deleteUserById = async(req, res) => {
-    const {userId} = req.body
-    try{
-        const response = await Users.findByIdAndDelete(userId)
+const deleteUserById = async (req, res) => {
+  const { userId } = req.params.id;
+  try {
+    const response = await Users.findByIdAndDelete(userId);
 
-        if(!response){
-            return res.status(400).json({message: "User Not Found"})
-        }
+    if (!response) {
+      return res.status(400).json({ message: "User Not Found" });
+    }
 
-        return res.status(200).json(response)
-    }
-    catch{
-        return res.status(500).json({message: "Internal Server Error"})
-    }
-}
+    return res.status(200).json(response);
+  } catch {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+exports.getUserById = getUserById;
+exports.updateUserById = updateUserById;
+exports.deleteUserById = deleteUserById;

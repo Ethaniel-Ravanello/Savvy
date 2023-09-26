@@ -1,9 +1,9 @@
-import Users from "../Models/Users.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+const Users = require("../Models/Users.js");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-export const signUp = async (req, res) => {
-  const { fullName, email, password, gender } = req.body;
+const signUp = async (req, res) => {
+  const { fullname, email, password, gender } = req.body;
   try {
     const existingUser = await Users.findOne({ email });
 
@@ -14,7 +14,7 @@ export const signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new Users({
-      fullName,
+      fullname,
       email,
       password: hashedPassword,
       gender,
@@ -35,7 +35,7 @@ export const signUp = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const existUser = await Users.findOne({ email });
@@ -63,3 +63,6 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Interna Server Error" });
   }
 };
+
+exports.signUp = signUp;
+exports.login = login;
