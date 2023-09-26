@@ -1,4 +1,4 @@
-import Income from "../Models/Income.js";
+const Income = require("../Models/Income.js");
 
 const getIncome = async (req, res) => {
   const { userId } = req.body;
@@ -42,6 +42,18 @@ const updateIncomeById = async (req, res) => {
   }
 };
 
+const createIncome = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const newIncome = new Income(req.body);
+    const saveIncome = await newIncome.save();
+
+    return res.status(200).json(saveIncome);
+  } catch {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 const deleteIncomeById = async (req, res) => {
   const { userId } = req.body;
   try {
@@ -51,3 +63,9 @@ const deleteIncomeById = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+exports.getIncome = getIncome;
+exports.getIncomeById = getIncomeById;
+exports.createIncome = createIncome;
+exports.updateIncomeById = updateIncomeById;
+exports.deleteIncomeById = deleteIncomeById;

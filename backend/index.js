@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const UserRoutes = require("./Routes/UserRoutes");
 const AuthRoutes = require("./Routes/AuthRoutes");
+const IncomeRoutes = require("./Routes/IncomeRoutes");
 
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -24,5 +25,6 @@ app.use(express.json());
 
 app.use(UserRoutes);
 app.use(AuthRoutes);
+app.use(IncomeRoutes);
 
 app.listen(5000, () => console.log("Server is Up and Running"));
