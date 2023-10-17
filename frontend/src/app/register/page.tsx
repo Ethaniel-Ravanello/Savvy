@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [showPass, setShowPass] = useState(false);
   return (
     <>
@@ -18,7 +18,7 @@ const LoginPage = () => {
           <div className="w-full bg-Highlight rounded-lg shadow text-white  md:mt-0 sm:max-w-md xl:p-0 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
-                Login to your account
+                Create An Account
               </h1>
               <form className="space-y-4 md:space-y-6" action="#">
                 <div>
@@ -93,13 +93,13 @@ const LoginPage = () => {
                   type="submit"
                   className="w-full text-white  bg-Secondary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                 >
-                  Sign in
+                  Sign up
                 </button>
                 <p className="text-sm font-light text-white">
-                  Dont Have An Account Yet?
+                  Already Have An Account?
                   <Link
                     className="font-medium text-primary-600 hover:underline ml-2"
-                    href="/register"
+                    href="/login"
                   >
                     Sign up
                   </Link>
@@ -113,4 +113,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

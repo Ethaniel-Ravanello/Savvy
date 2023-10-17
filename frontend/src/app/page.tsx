@@ -1,113 +1,136 @@
-import Image from 'next/image'
+import React from "react";
+import Link from "next/link";
 
-export default function Home() {
+import Sidebar from "./Components/Sidebar";
+import Charts from "./Components/Chart";
+
+import { TbCash, TbCashOff } from "react-icons/tb";
+import { BiDollarCircle } from "react-icons/bi";
+import { AiOutlineArrowRight } from "react-icons/ai";
+
+const page = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="flex p-3">
+      <Sidebar />
+      <div className="w-fit ml-16 mt-8">
+        <Charts />
+
+        <div className="mt-16">
+          <Link href="/income">
+            <div className="bg-Highlight p-5 rounded-[20px] text-white mt-10 flex">
+              <BiDollarCircle className="w-8 h-8 text-Success mr-3" />
+              <p className="pt-1 hover:underline">Add New Income</p>
+            </div>
+          </Link>
+
+          <Link href="/income">
+            <div className="bg-Highlight p-5 rounded-[20px] text-white mt-10 flex">
+              <BiDollarCircle className="w-8 h-8 text-red-800  mr-3" />
+              <p className="pt-1 hover:underline">Add New Expenses</p>
+            </div>
+          </Link>
         </div>
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div>
+        <div className="h-[25%] text-white flex justify-around bg-Highlight p-5 ml-10 rounded-[20px] mt-4">
+          <div className="pt-2">
+            <h2 className="text-3xl mb-3">Total Income</h2>
+            <p className="text-4xl font-semibold">Rp. 6.250.000</p>
+          </div>
+          <div className="pt-2">
+            <h2 className="text-3xl mb-3">Total Expense</h2>
+            <p className="text-4xl font-semibold">Rp. 6.250.000</p>
+          </div>
+        </div>
+
+        <div className=" bg-Highlight rounded-[20px] mt-3 ml-10 h-[30%] flex flex-wrap">
+          <div className="flex px-3 pb-3 pt-5">
+            <TbCash className="text-white w-12 h-12" />
+            <div className="text-white ml-5">
+              <p className="text-[#616161]">Income</p>
+              <p>IDR 5.000.000</p>
+            </div>
+          </div>
+
+          <div className="flex px-3 pb-3 pt-5">
+            <TbCashOff className="text-white w-12 h-12" />
+            <div className="text-white ml-5">
+              <p className="text-[#616161]">Expenses</p>
+              <p>IDR 5.000.000</p>
+            </div>
+          </div>
+
+          <div className="flex px-3 pb-3 pt-5">
+            <TbCash className="text-white w-12 h-12" />
+            <div className="text-white ml-5">
+              <p className="text-[#616161]">Income</p>
+              <p>IDR 5.000.000</p>
+            </div>
+          </div>
+
+          <div className="flex px-3 pb-3 pt-5">
+            <TbCashOff className="text-white w-12 h-12" />
+            <div className="text-white ml-5">
+              <p className="text-[#616161]">Expenses</p>
+              <p>IDR 5.000.000</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-between ml-10 text-white h-[36%] mt-3">
+          <div className="bg-Highlight rounded-[20px] p-4">
+            <div className="flex w-full justify-between">
+              <p className="text-xl font-semibold -mt-1.5">Latest Incomes</p>
+              <div className="rounded-full bg-[#222222] ml-14 p-2 -mt-2 cursor-pointer">
+                <AiOutlineArrowRight className="w-5 h-5" />
+              </div>
+            </div>
+
+            <div className="flex pb-3 pt-5">
+              <TbCashOff className="text-white w-12 h-12" />
+              <div className="text-white ml-5">
+                <p className="text-[#616161]">Paycheck</p>
+                <p>IDR 5.000.000</p>
+              </div>
+            </div>
+
+            <div className="flex pb-3 pt-5">
+              <TbCashOff className="text-white w-12 h-12" />
+              <div className="text-white ml-5">
+                <p className="text-[#616161]">Paycheck</p>
+                <p>IDR 5.000.000</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-Highlight rounded-[20px] p-4">
+            <div className="flex w-full justify-between">
+              <p className="text-xl font-semibold -mt-1.5">Latest Expenses</p>
+              <div className="rounded-full bg-[#222222] ml-14 p-2 -mt-2 cursor-pointer">
+                <AiOutlineArrowRight className="w-5 h-5" />
+              </div>
+            </div>
+
+            <div className="flex pb-3 pt-5">
+              <TbCashOff className="text-white w-12 h-12" />
+              <div className="text-white ml-5">
+                <p className="text-[#616161]">Paycheck</p>
+                <p>IDR 5.000.000</p>
+              </div>
+            </div>
+
+            <div className="flex pb-3 pt-5">
+              <TbCashOff className="text-white w-12 h-12" />
+              <div className="text-white ml-5">
+                <p className="text-[#616161]">Paycheck</p>
+                <p>IDR 5.000.000</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  );
+};
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+export default page;
