@@ -13,6 +13,13 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      screens: {
+        "tablet" : "480px",
+        "small-screen" : "769px",
+        "medium-screen" : "1024px",
+        "normal-screen" : "1280px",
+        "large-screen" : "1536px",
+      },
       colors: {
         "Primary" : "#5D8D7B",
         "Secondary" : "#E25933",
@@ -24,6 +31,8 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }
 export default config

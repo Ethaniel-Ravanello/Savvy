@@ -10,7 +10,7 @@ import { TbPigMoney } from "react-icons/tb";
 
 const Sidebar = () => {
   return (
-    <div className="bg-Highlight w-[250px] h-[calc(100vh-30px)] text-white rounded-[40px] p-5">
+    <div className="bg-Highlight w-[250px] h-[calc(100vh-30px)] text-white rounded-[40px] p-5 overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-400">
       <div className="mx-auto w-fit py-5">
         {/* <CgProfile className="mx-auto w-20 h-20 mb-8 mt-3" /> */}
         <h2 className="text-2xl font-semibold">Hello, Ethan</h2>
