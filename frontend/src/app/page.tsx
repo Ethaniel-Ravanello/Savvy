@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
 
 import Charts from "./Components/Chart";
@@ -12,13 +13,25 @@ import {
   AiOutlineArrowUp,
   AiOutlineArrowDown,
 } from "react-icons/ai";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const page = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      {/* <div className="sticky top-0">
-        <Navbar />
-      </div> */}
+      <GiHamburgerMenu
+        onClick={() => setIsOpen(!isOpen)}
+        className="text-white w-8 h-8 absolute z-10 -mt-3 md:mt-5 ml-5 lg:hidden"
+      />
+      <div
+        className={
+          isOpen
+            ? "fixed top-0 -mt-[2rem] inset-0 duration-300 z-20"
+            : "fixed top-0 -mt-[2rem] left-[-300px] duration-300 z-20"
+        }
+      >
+        <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
+      </div>
       <div className="md:p-3 lg:flex  mx-auto">
         <div className="hidden lg:block">
           <Sidebar />
@@ -26,7 +39,7 @@ const page = () => {
 
         <div>
           <div className="xl:ml-7 mt-8 md:mt-0 md:flex md:mx-auto">
-            <div className="mx-auto align-middle mb-5 hidden md:flex items-center lg:ml-7">
+            <div className="mx-auto align-middle mb-5 hidden md:flex items-center lg:ml-7 mt-10">
               <Charts />
             </div>
 
