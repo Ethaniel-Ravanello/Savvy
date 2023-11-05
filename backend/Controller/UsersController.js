@@ -1,9 +1,8 @@
 const Users = require("../Models/Users");
 
 const getUserById = async (req, res) => {
-  const { userId } = req.params.id;
   try {
-    const response = await Users.findById(userId);
+    const response = await Users.findById(req.params.id);
     console.log(response);
     if (!response) {
       return res.status(400).json({ message: "User Not Found" });
@@ -15,9 +14,8 @@ const getUserById = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
-  const { userId } = req.params.id;
   try {
-    const response = await Users.findByIdAndUpdate(userId, req.body, {
+    const response = await Users.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!response) {
@@ -30,9 +28,8 @@ const updateUserById = async (req, res) => {
 };
 
 const deleteUserById = async (req, res) => {
-  const { userId } = req.params.id;
   try {
-    const response = await Users.findByIdAndDelete(userId);
+    const response = await Users.findByIdAndDelete(req.params.id);
 
     if (!response) {
       return res.status(400).json({ message: "User Not Found" });

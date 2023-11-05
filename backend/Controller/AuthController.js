@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const signUp = async (req, res) => {
-  const { fullname, email, password, gender } = req.body;
+  const { firstName, lastName, country, email, password, gender } = req.body;
   try {
     const existingUser = await Users.findOne({ email });
 
@@ -14,7 +14,9 @@ const signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new Users({
-      fullname,
+      firstName,
+      lastName,
+      country,
       email,
       password: hashedPassword,
       gender,
@@ -56,7 +58,6 @@ const login = async (req, res) => {
 
     res.status(200).json({
       userId: existUser._id,
-      fullName: existUser.fullName,
       token: token,
     });
   } catch {
