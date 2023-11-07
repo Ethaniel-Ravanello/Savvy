@@ -17,7 +17,7 @@ const page = () => {
     <Layout>
       <div>
         <div className="xl:ml-7 mt-8 md:mt-0 md:flex md:mx-auto">
-          <div className="mx-auto align-middle mb-5 hidden md:flex items-center lg:ml-7 mt-10">
+          <div className="mx-auto align-middle mb-5 hidden xl:flex items-center lg:ml-7 mt-10">
             <Charts />
           </div>
 
@@ -89,7 +89,7 @@ const page = () => {
           </div>
         </div>
 
-        <div className="md:flex md:justify-between text-white h-[36%] mt-3 lg:md-5">
+        <div className="md:flex md:justify-between text-white h-[36%] md:mt-5 xl:mt-0">
           <div className="xl:ml-7 px-3 lg:px-0 lg:pl-3 md:w-[35%] mb-5">
             <Link href="/income">
               <div className="bg-Highlight p-5 rounded-[20px] text-white lg:mt-2 flex">
@@ -106,7 +106,7 @@ const page = () => {
             </Link>
           </div>
 
-          <div className="px-3 lg:pr-3 lg:px-0 mb-5  md:flex md:justify-between md:w-[65%] md:ml-5">
+          <div className="px-3 lg:pr-3 lg:px-0 pb-3 md:pb-0 md:flex md:justify-between md:w-[65%] md:ml-5">
             <div className="bg-Highlight rounded-[20px] p-4 mb-5 md:mb-0 md:w-full md:mr-4">
               <div className="flex w-full justify-between">
                 <p className="lg:text-xl font-semibold -mt-1.5 md:pt-1">

@@ -34,7 +34,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="flex mb-2">
-              <Link href="/" className="flex">
+              <Link href="/setting" className="flex">
                 <div className="bg-[#222222] rounded-full">
                   <BsFillPersonFill className="m-2.5" />
                 </div>
@@ -80,7 +80,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className=" bg-[#222222] mt-10 rounded-[20px] py-5">
+      <div className=" bg-[#222222] mt-5 rounded-[20px] py-5">
         <p className="w-fit mx-auto text-xl font-semibold">Sign Out</p>
       </div>
     </div>

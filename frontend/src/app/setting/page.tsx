@@ -6,7 +6,7 @@ const page = () => {
   return (
     <Layout>
       <div className="text-white h-[calc(100vh-30px)] w-full bg-Highlight rounded-[30px] p-10 ml-5">
-        <h1 className="text-2xl mb-10">Edit Your Profile</h1>
+        <h1 className="text-2xl mb-5">Edit Your Profile</h1>
 
         <form>
           <div className="relative z-0 w-full mb-6 group">
@@ -96,7 +96,7 @@ const page = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 md:gap-6">
+          <div className="grid">
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="tel"
@@ -114,21 +114,21 @@ const page = () => {
                 Country
               </label>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <label
-                htmlFor="countries"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-500"
-              >
-                Select your Gender
-              </label>
-              <select
-                id="countries"
-                className=" bg-transparent border-0 border-b-2 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:border-b-gray-600  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <label
+              htmlFor="countries"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+            >
+              Select your Gender
+            </label>
+            <select
+              id="countries"
+              className=" bg-Highlight border-0 border-b-2 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-Highlight dark:border-b-gray-600  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option>Male</option>
+              <option>Female</option>
+            </select>
           </div>
 
           <button
