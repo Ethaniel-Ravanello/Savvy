@@ -7,8 +7,8 @@ import { BsFillPencilFill, BsFillTrashFill } from "react-icons/bs";
 const page = () => {
   return (
     <Layout>
-      <div className="text-white h-[calc(100vh-30px)] w-full overflow-x-auto overflow-y-auto bg-Highlight rounded-[30px] p-10 ml-5">
-        <h1 className="text-2xl mb-5">Transaction History</h1>
+      <div className="text-white h-[calc(100vh-30px)] w-full overflow-x-auto overflow-y-auto lg:bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
+        <h1 className="text-2xl mb-5 mt-5 lg:mt-0">Transaction History</h1>
 
         <div className="overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

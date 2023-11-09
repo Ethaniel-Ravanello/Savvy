@@ -5,7 +5,7 @@ import Layout from "../Components/Layout";
 const page = () => {
   return (
     <Layout>
-      <div className="text-white h-[calc(100vh-30px)] w-full bg-Highlight rounded-[30px] p-10 ml-5">
+      <div className="text-white lg:h-[calc(100vh-30px)] w-full md:bg-Highlight rounded-[30px] p-10 lg:ml-5">
         <h1 className="text-2xl mb-5">Edit Your Profile</h1>
 
         <form>

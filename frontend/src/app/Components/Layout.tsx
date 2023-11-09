@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <div>
       <GiHamburgerMenu
         onClick={() => setIsOpen(!isOpen)}
-        className="text-white w-8 h-8 absolute z-10 -mt-3 md:mt-5 ml-5 lg:hidden"
+        className="text-white w-8 h-8 absolute z-10 md:mt-5 ml-5 lg:hidden"
       />
       <div
         className={

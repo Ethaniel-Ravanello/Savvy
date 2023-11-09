@@ -33,15 +33,17 @@ const signUp = async (req, res) => {
       message: "User Succesfully Created",
     });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Errors" });
   }
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
+  console.log(password);
   try {
-    const existUser = await Users.findOne({ email });
-
+    const existUser = await Users.findOne({ email: email });
+    console.log(existUser);
     if (!existUser) {
       return res.status(400).json({ message: "User Not Found" });
     }
@@ -61,7 +63,7 @@ const login = async (req, res) => {
       token: token,
     });
   } catch {
-    return res.status(500).json({ message: "Interna Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

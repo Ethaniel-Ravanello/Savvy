@@ -11,7 +11,7 @@ import { TbPigMoney } from "react-icons/tb";
 const Sidebar = () => {
   return (
     <div className="bg-Highlight w-[250px] h-[calc(100vh-30px)] text-white rounded-[40px] px-4 py-5 overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-400">
-      <div className="mx-auto w-fit py-5">
+      <div className="mx-auto w-fit pb-5 pt-2">
         {/* <CgProfile className="mx-auto w-20 h-20 mb-8 mt-3" /> */}
         <h2 className="text-2xl font-semibold">Hello, Ethan</h2>
       </div>
@@ -60,7 +60,7 @@ const Sidebar = () => {
             </li>
 
             <li className="flex hover:bg-white p-3 rounded-lg">
-              <Link href="/" className="flex">
+              <Link href="/incomes" className="flex">
                 <div className="bg-[#222222] rounded-full">
                   <MdAttachMoney className="m-2.5" />
                 </div>
@@ -69,7 +69,7 @@ const Sidebar = () => {
             </li>
 
             <li className="flex hover:bg-white p-3 rounded-lg">
-              <Link href="/" className="flex">
+              <Link href="/expenses" className="flex">
                 <div className="bg-[#222222] rounded-full">
                   <MdMoneyOff className="m-2.5" />
                 </div>
@@ -80,7 +80,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="w-fit mx-auto bg-[#222222] rounded-[20px] mb-auto py-3 px-5 relative mt-3">
+      <div className="w-fit mx-auto bg-[#222222] rounded-[20px] mb-auto py-3 px-5 relative mt-1">
         <p className="mx-auto text-xl font-semibold">Sign Out</p>
       </div>
     </div>

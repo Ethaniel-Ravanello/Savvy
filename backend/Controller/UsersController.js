@@ -3,13 +3,12 @@ const Users = require("../Models/Users");
 const getUserById = async (req, res) => {
   try {
     const response = await Users.findById(req.params.id);
-    console.log(response);
     if (!response) {
       return res.status(400).json({ message: "User Not Found" });
     }
     return res.status(200).json(response);
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Errorss" });
   }
 };
 

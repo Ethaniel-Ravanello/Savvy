@@ -1,10 +1,33 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import axios from "axios";
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [showPass, setShowPass] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useRouter();
+
+  const postLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/login", {
+        email: email,
+        password: password,
+      });
+      localStorage.setItem("Token", response.data.token);
+      navigate.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = () => {
+    postLogin();
+  };
   return (
     <>
       <section className="">
@@ -31,6 +54,8 @@ const LoginPage = () => {
                   <input
                     name="email"
                     id="email"
+                    type="email"
+                    onChange={(e) => setEmail(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     placeholder="name@company.com"
                     required
@@ -49,6 +74,7 @@ const LoginPage = () => {
                       name="password"
                       id="password"
                       placeholder="••••••••"
+                      onChange={(e) => setPassword(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       required
                     />
@@ -90,7 +116,8 @@ const LoginPage = () => {
                   </a>
                 </div>
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={handleSubmit}
                   className="w-full text-white  bg-Secondary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                 >
                   Sign in
