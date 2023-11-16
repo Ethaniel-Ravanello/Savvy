@@ -1,14 +1,20 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import { CgProfile } from "react-icons/cg";
 import { AiFillHome } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdAttachMoney, MdMoneyOff } from "react-icons/md";
 import { TbPigMoney } from "react-icons/tb";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = () => {
+  const navigate = useRouter();
+
+  const handleSignOut = () => {
+    localStorage.clear();
+    navigate.push("/login");
+  };
   return (
     <div className="bg-Highlight w-[250px] h-[calc(100vh-30px)] text-white rounded-[40px] px-4 py-5 overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-400">
       <div className="mx-auto w-fit pb-5 pt-2">
@@ -25,22 +31,29 @@ const Sidebar = () => {
           <h2 className="text-white font-semibold text-2xl mb-2">Home</h2>
 
           <ul className="text-lg">
-            <li className="flex hover:bg-white p-3 rounded-lg">
-              <Link href="/" className="flex">
+            <Link
+              href="/"
+              className="flex w-full hover:bg-[#222222] rounded-lg"
+            >
+              <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">
                   <AiFillHome className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Dashboard</p>
-              </Link>
-            </li>
-            <li className="flex mb-2 hover:bg-white p-3 rounded-lg">
-              <Link href="/setting" className="flex hover:bg-white">
+              </li>
+            </Link>
+
+            <Link
+              href="/setting"
+              className="flex hover:bg-[#222222] rounded-lg"
+            >
+              <li className="flex hover:bg-[#222222] p-3 ">
                 <div className="bg-[#222222] rounded-full">
                   <BsFillPersonFill className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Settings</p>
-              </Link>
-            </li>
+              </li>
+            </Link>
           </ul>
         </div>
 
@@ -50,38 +63,51 @@ const Sidebar = () => {
           </h2>
 
           <ul className="text-lg">
-            <li className="flex hover:bg-white p-3 rounded-lg">
-              <Link href="/history" className="flex">
+            <Link
+              href="/history"
+              className="flex hover:bg-[#222222] rounded-lg"
+            >
+              <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">
                   <TbPigMoney className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">History</p>
-              </Link>
-            </li>
+              </li>
+            </Link>
 
-            <li className="flex hover:bg-white p-3 rounded-lg">
-              <Link href="/incomes" className="flex">
+            <Link
+              href="/incomes"
+              className="flex rounded-lg hover:bg-[#222222]"
+            >
+              <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">
                   <MdAttachMoney className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Incomes</p>
-              </Link>
-            </li>
+              </li>
+            </Link>
 
-            <li className="flex hover:bg-white p-3 rounded-lg">
-              <Link href="/expenses" className="flex">
+            <Link
+              href="/expenses"
+              className="flex rounded-lg hover:bg-[#222222]"
+            >
+              <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">
                   <MdMoneyOff className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Expense</p>
-              </Link>
-            </li>
+              </li>
+            </Link>
           </ul>
         </div>
       </div>
 
-      <div className="w-fit mx-auto bg-[#222222] rounded-[20px] mb-auto py-3 px-5 relative mt-1">
-        <p className="mx-auto text-xl font-semibold">Sign Out</p>
+      <div
+        onClick={handleSignOut}
+        className="mt-5 ml-2 flex hover:underline hover:text-gray-500 hover:cursor-pointer w-fit"
+      >
+        <FaSignOutAlt className="w-5 h-5 mt-0.5 mr-3" />
+        <span className="">Sign Out</span>
       </div>
     </div>
   );

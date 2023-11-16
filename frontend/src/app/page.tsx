@@ -1,5 +1,8 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 import Layout from "./Components/Layout";
 import Charts from "./Components/Chart";
@@ -13,6 +16,51 @@ import {
 } from "react-icons/ai";
 
 const page = () => {
+  const [latestTransaction, setLatestTransaction] = useState({});
+  const [income, setIncome] = useState({});
+  const [totalIncome, setTotalIncome] = useState({});
+  const [expense, setExpense] = useState({});
+  const [totalExpense, setTotalExpense] = useState({});
+  const getAllData = async () => {
+    const userId = localStorage.getItem("Id");
+    try {
+      const [latestTransaction, income, totalIncome, expense, totalExpense] =
+        await axios.all([
+          axios.get("http://localhost:5000/latestTransaction", {
+            params: { userId: userId },
+          }),
+          axios.get("http://localhost:5000/income", {
+            params: { userId: userId },
+          }),
+          axios.get("http://localhost:5000/income/total", {
+            params: { userId: userId },
+          }),
+          axios.get("http://localhost:5000/expense", { params: { userId } }),
+          axios.get("http://localhost:5000/expense/total", {
+            params: { userId: userId },
+          }),
+        ]);
+      setLatestTransaction(latestTransaction);
+      setIncome(income);
+      setTotalIncome(totalIncome);
+      setExpense(expense);
+      setTotalExpense(totalExpense);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const navigate = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    if (!token) {
+      navigate.push("/login");
+    }
+  });
+
+  useEffect(() => {
+    getAllData();
+  }, []);
+
   return (
     <Layout>
       <div>

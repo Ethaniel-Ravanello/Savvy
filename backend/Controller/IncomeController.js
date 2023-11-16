@@ -1,7 +1,7 @@
 const Income = require("../Models/Income.js");
 
 const getIncome = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
   try {
     const response = await Income.find({ userId: userId });
 
@@ -12,14 +12,19 @@ const getIncome = async (req, res) => {
 };
 
 const getIncomeById = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
+  const { _id } = req.body;
   try {
     const response = await Income.findOne({
-      _id: req.params.id,
+      _id: _id,
       userId: userId,
     });
 
-    return res.status(200).json(response);
+    if (!response) {
+      return "No Data";
+    }
+
+    return res.status(200).json({ data: response, status: res.statusCode });
   } catch {
     return res.status(500).json({ message: "Internal Server Error" });
   }
@@ -43,7 +48,6 @@ const updateIncomeById = async (req, res) => {
 };
 
 const createIncome = async (req, res) => {
-  const { userId } = req.body;
   try {
     const newIncome = new Income(req.body);
     const saveIncome = await newIncome.save();
@@ -64,8 +68,31 @@ const deleteIncomeById = async (req, res) => {
   }
 };
 
+const getTotalIncome = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const response = await Income.find({ userId: userId });
+
+    const totalIncome = response.reduce(
+      (total, income) => total + income.income_amount,
+      0
+    );
+
+    return res.status(200).json({
+      message: "Succesfuly getting Total Income",
+      status: res.statusCode,
+      data: totalIncome,
+    });
+  } catch {
+    return res
+      .status(500)
+      .json({ message: "Internal Error", status: res.statusCode });
+  }
+};
+
 exports.getIncome = getIncome;
 exports.getIncomeById = getIncomeById;
 exports.createIncome = createIncome;
 exports.updateIncomeById = updateIncomeById;
 exports.deleteIncomeById = deleteIncomeById;
+exports.getTotalIncome = getTotalIncome;

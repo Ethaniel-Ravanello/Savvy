@@ -8,7 +8,9 @@ const signUp = async (req, res) => {
     const existingUser = await Users.findOne({ email });
 
     if (existingUser) {
-      return res.status(400).json({ message: "User Already Existed" });
+      return res
+        .status(400)
+        .json({ message: "User Already Existed", status: res.statusCode });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -59,8 +61,10 @@ const login = async (req, res) => {
     });
 
     res.status(200).json({
+      status: res.statusCode,
       userId: existUser._id,
       token: token,
+      message: "Login Succesful",
     });
   } catch {
     return res.status(500).json({ message: "Internal Server Error" });

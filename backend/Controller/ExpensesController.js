@@ -1,7 +1,7 @@
 const Expenses = require("../Models/Expenses");
 
 const getExpenses = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
   try {
     const response = await Expenses.find({ userId: userId });
 
@@ -12,7 +12,7 @@ const getExpenses = async (req, res) => {
 };
 
 const getExpensesById = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
   try {
     const response = await Expenses.findOne({
       _id: req.params.id,
@@ -65,8 +65,32 @@ const deleteExpense = async (req, res) => {
   }
 };
 
+const getTotalExpense = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const response = await Expenses.find({ userId: userId });
+
+    const totalExpense = response.reduce(
+      (total, expense) => total + expense.expenses_amount,
+      0
+    );
+
+    return (
+      res.status(200),
+      json({
+        message: "Succesfuly Getting Total Expense",
+        status: res.statusCode,
+        data: totalExpense,
+      })
+    );
+  } catch (error) {
+    res.status(500).json({ message: "Internal Error", status: res.statusCode });
+  }
+};
+
 exports.getExpenses = getExpenses;
 exports.getExpensesById = getExpensesById;
 exports.updateExpense = updateExpense;
 exports.createExpense = createExpense;
 exports.deleteExpense = deleteExpense;
+exports.getTotalExpense = getTotalExpense;
