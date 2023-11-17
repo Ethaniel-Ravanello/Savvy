@@ -104,7 +104,7 @@ const Sidebar = () => {
 
       <div
         onClick={handleSignOut}
-        className="mt-5 ml-2 flex hover:underline hover:text-gray-500 hover:cursor-pointer w-fit"
+        className="mt-5 ml-2 flex hover:underline hover:text-gray-500 hover:cursor-pointer w-fit absolute bottom-10"
       >
         <FaSignOutAlt className="w-5 h-5 mt-0.5 mr-3" />
         <span className="">Sign Out</span>

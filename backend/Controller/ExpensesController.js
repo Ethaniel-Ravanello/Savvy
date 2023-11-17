@@ -5,23 +5,41 @@ const getExpenses = async (req, res) => {
   try {
     const response = await Expenses.find({ userId: userId });
 
-    return res.status(200).json(response);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Get All Expenses Data",
+      data: response,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
 const getExpensesById = async (req, res) => {
-  const { userId } = req.params;
+  const { userId, id } = req.params;
   try {
     const response = await Expenses.findOne({
-      _id: req.params.id,
       userId: userId,
+      _id: id,
     });
 
-    return res.status(200).json(response);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Get Expenses Data",
+      data: response,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -30,9 +48,18 @@ const createExpense = async (req, res) => {
     const newExpense = new Expenses(req.body);
     const saveExpense = newExpense.save();
 
-    return res.status(200).json(saveExpense);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Create Expense",
+      data: saveExpense,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -44,11 +71,14 @@ const updateExpense = async (req, res) => {
       _id: req.params.id,
       userId: userId,
     });
-
     findExpense.set(updateData);
     const updateExpense = await findExpense.save();
-
-    return res.status(200).json(updateExpense);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Update Data",
+      data: updateExpense,
+    });
   } catch {
     return res.status(500).json({ message: "Internal Server Error" });
   }
@@ -59,9 +89,17 @@ const deleteExpense = async (req, res) => {
 
   try {
     await Expenses.deleteOne({ _id: req.params.id, userId: userId });
-    return res.status(200).json({ message: "Expense Succesfully Deleted" });
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Delete Expense",
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -75,16 +113,18 @@ const getTotalExpense = async (req, res) => {
       0
     );
 
-    return (
-      res.status(200),
-      json({
-        message: "Succesfuly Getting Total Expense",
-        status: res.statusCode,
-        data: totalExpense,
-      })
-    );
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Get Total Expense",
+      data: totalExpense,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Internal Error", status: res.statusCode });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 

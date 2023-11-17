@@ -5,28 +5,42 @@ const getIncome = async (req, res) => {
   try {
     const response = await Income.find({ userId: userId });
 
-    return res.status(200).json(response);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Get All Income Data",
+      data: response,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
 const getIncomeById = async (req, res) => {
-  const { userId } = req.params;
-  const { _id } = req.body;
+  const { userId, id } = req.params;
   try {
-    const response = await Income.findOne({
-      _id: _id,
-      userId: userId,
-    });
+    const response = await Income.findOne({ userId: userId, _id: id });
 
     if (!response) {
       return "No Data";
     }
 
-    return res.status(200).json({ data: response, status: res.statusCode });
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Get Income Data",
+      data: response,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -41,9 +55,18 @@ const updateIncomeById = async (req, res) => {
     response.set(updatedData);
     const updateIncome = await response.save();
 
-    return res.status(200).json(updateIncome);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Update Income Data",
+      data: updateIncome,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -52,9 +75,18 @@ const createIncome = async (req, res) => {
     const newIncome = new Income(req.body);
     const saveIncome = await newIncome.save();
 
-    return res.status(200).json(saveIncome);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Create Income",
+      data: saveIncome,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -62,7 +94,11 @@ const deleteIncomeById = async (req, res) => {
   const { userId } = req.body;
   try {
     await Income.deleteOne({ _id: req.params.id, userId: userId });
-    return res.status(200).json({ message: "Income Succesfully Deleted" });
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Delete Income",
+    });
   } catch {
     return res.status(500).json({ message: "Internal Server Error" });
   }
@@ -72,21 +108,24 @@ const getTotalIncome = async (req, res) => {
   const { userId } = req.params;
   try {
     const response = await Income.find({ userId: userId });
-
+    console.log(response);
     const totalIncome = response.reduce(
       (total, income) => total + income.income_amount,
       0
     );
 
     return res.status(200).json({
-      message: "Succesfuly getting Total Income",
       status: res.statusCode,
+      error: false,
+      message: "Succesfully Get Total Income",
       data: totalIncome,
     });
   } catch {
-    return res
-      .status(500)
-      .json({ message: "Internal Error", status: res.statusCode });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 

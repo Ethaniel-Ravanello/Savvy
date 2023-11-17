@@ -4,14 +4,25 @@ import React from "react";
 import { Chart, ArcElement } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-const Charts = () => {
+interface FormatCurrencyFunction {
+  (amount: number): string;
+}
+
+interface Props {
+  income: number;
+  expense: number;
+  formatCurrency: FormatCurrencyFunction;
+}
+
+const Charts = ({ income, expense, formatCurrency }: Props) => {
+  const balance = income - expense;
   Chart.register(ArcElement);
 
   const config = {
     data: {
       datasets: [
         {
-          data: [6000000, 2500000, 1250000],
+          data: [income, expense, balance],
           backgroundColor: [
             "rgb(76 175 80)",
             "rgb(153 27 27)",
@@ -33,7 +44,9 @@ const Charts = () => {
         <Doughnut {...config}></Doughnut>
         <div className="w-full mx-auto text-center absolute top-1/3">
           <p className="text-white text-2xl">Total Balance</p>
-          <span className="text-[#35B3EC] text-xl">Rp. 500.000</span>
+          <span className="text-[#35B3EC] text-xl">
+            {formatCurrency(balance)}
+          </span>
         </div>
       </div>
     </div>

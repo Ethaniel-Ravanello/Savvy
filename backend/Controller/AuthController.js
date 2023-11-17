@@ -30,6 +30,7 @@ const signUp = async (req, res) => {
       expiresIn: "2h",
     });
     return res.status(200).json({
+      status: res.statusCode,
       userId: newUser._id,
       token,
       message: "User Succesfully Created",

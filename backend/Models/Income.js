@@ -7,6 +7,11 @@ const IncomeSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
+    type: {
+      type: String,
+      enum: ["Income", "Expense"],
+      required: true,
+    },
     income_name: {
       type: String,
       required: true,
