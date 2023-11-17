@@ -1,19 +1,7 @@
 interface ExpenseResponse {
-  status: number;
-  message: string;
-  error: boolean;
-  data: {
-    _id: string;
-    userId: string;
-    type: string;
-    expenses_name: string;
-    expenses_description: string;
-    expense_date: string;
-    expenses_amount: number;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
+  id: number;
+  type: string;
+  expenses_amount: number;
 }
 
 interface TotalExpenseResponse {

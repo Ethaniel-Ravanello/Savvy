@@ -9,7 +9,7 @@ interface Data {
 
 const TransactionCard = ({ type, amount }: Data) => {
   return (
-    <div className="flex  md:m-5">
+    <div className="flex">
       {type === "Income" ? (
         <TbCash className="text-white w-12 h-12" />
       ) : (

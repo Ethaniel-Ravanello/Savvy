@@ -18,14 +18,14 @@ import {
   AiOutlineArrowUp,
   AiOutlineArrowDown,
 } from "react-icons/ai";
-import { TotalExpenseResponse } from "./Interfaces/Expense";
+import { ExpenseResponse, TotalExpenseResponse } from "./Interfaces/Expense";
 
 const page = () => {
   const [latestTransaction, setLatestTransaction] =
     useState<TransactionResponse[]>();
-  const [income, setIncome] = useState({});
+  const [income, setIncome] = useState<IncomeResponse[]>();
   const [totalIncome, setTotalIncome] = useState<TotalIncomeResponse>();
-  const [expense, setExpense] = useState({});
+  const [expense, setExpense] = useState<ExpenseResponse[]>();
   const [totalExpense, setTotalExpense] = useState<TotalExpenseResponse>();
 
   const navigate = useRouter();
@@ -41,9 +41,9 @@ const page = () => {
           axios.get(`http://localhost:5000/total/expense/${userId}`),
         ]);
       setLatestTransaction(latestTransaction.data.data);
-      setIncome(income);
+      setIncome(income.data.data);
       setTotalIncome(totalIncome.data);
-      setExpense(expense);
+      setExpense(expense.data.data);
       setTotalExpense(totalExpense.data);
     } catch (error) {
       console.log(error);
@@ -68,7 +68,8 @@ const page = () => {
       maximumFractionDigits: 0,
     });
   };
-
+  console.log(income);
+  console.log(expense);
   return (
     <Layout>
       <div className="w-full">
@@ -122,15 +123,17 @@ const page = () => {
               </h2>
               <div className="md:flex md:flex-wrap">
                 {latestTransaction?.map((data: TransactionResponse) => (
-                  <TransactionCard
-                    key={data.id}
-                    type={data.type}
-                    amount={
-                      data.type === "Income"
-                        ? formatCurrency(data.income_amount)
-                        : formatCurrency(data.expenses_amount)
-                    }
-                  />
+                  <div className="md:m-5">
+                    <TransactionCard
+                      key={data.id}
+                      type={data.type}
+                      amount={
+                        data.type === "Income"
+                          ? formatCurrency(data.income_amount)
+                          : formatCurrency(data.expenses_amount)
+                      }
+                    />
+                  </div>
                 ))}
               </div>
             </div>
@@ -165,20 +168,16 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="flex pb-2 pt-2">
-                <TbCashOff className="text-white w-12 h-12" />
-                <div className="text-white ml-5">
-                  <p className="text-[#616161]">Paycheck</p>
-                  <p>IDR 5.000.000</p>
-                </div>
-              </div>
-
-              <div className="flex pb-3 pt-5">
-                <TbCashOff className="text-white w-12 h-12" />
-                <div className="text-white ml-5">
-                  <p className="text-[#616161]">Paycheck</p>
-                  <p>IDR 5.000.000</p>
-                </div>
+              <div className="overflow-y-scroll h-[80%] scrollbar-thin scrollbar-thumb-white">
+                {income?.map((data) => (
+                  <div className="pt-2">
+                    <TransactionCard
+                      amount={formatCurrency(data.income_amount)}
+                      type={data.type}
+                      key={data.id}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -192,20 +191,16 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="flex pb-3 pt-5">
-                <TbCashOff className="text-white w-12 h-12" />
-                <div className="text-white ml-5">
-                  <p className="text-[#616161]">Paycheck</p>
-                  <p>IDR 5.000.000</p>
-                </div>
-              </div>
-
-              <div className="flex pb-3 pt-5">
-                <TbCashOff className="text-white w-12 h-12" />
-                <div className="text-white ml-5">
-                  <p className="text-[#616161]">Paycheck</p>
-                  <p>IDR 5.000.000</p>
-                </div>
+              <div className="overflow-y-scroll h-[80%] scrollbar-thin scrollbar-thumb-white">
+                {expense?.map((data) => (
+                  <div className="pt-2">
+                    <TransactionCard
+                      amount={formatCurrency(data.expenses_amount)}
+                      type={data.type}
+                      key={data.id}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
