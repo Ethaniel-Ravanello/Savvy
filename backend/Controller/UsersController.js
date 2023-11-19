@@ -1,4 +1,5 @@
 const Users = require("../Models/Users");
+const bcrypt = require("bcrypt");
 
 const getUserById = async (req, res) => {
   try {
@@ -13,10 +14,23 @@ const getUserById = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
+  const { firstName, lastName, country, email, password, gender } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
   try {
-    const response = await Users.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const response = await Users.findByIdAndUpdate(
+      req.params.id,
+      {
+        firstName: firstName,
+        lastName: lastName,
+        country: country,
+        email: email,
+        password: hashedPassword,
+        gender: gender,
+      },
+      {
+        new: true,
+      }
+    );
     if (!response) {
       return res.status(400).json({ message: "User Not Found" });
     }

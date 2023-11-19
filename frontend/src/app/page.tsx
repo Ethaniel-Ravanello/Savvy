@@ -5,20 +5,20 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 import { IncomeResponse, TotalIncomeResponse } from "./Interfaces/Income";
+import { ExpenseResponse, TotalExpenseResponse } from "./Interfaces/Expense";
 import TransactionResponse from "./Interfaces/Latest";
+import formatCurrency from "./utils/FormatCurrency";
 
 import Layout from "./Components/Layout";
 import Charts from "./Components/Chart";
 import TransactionCard from "./Components/TransactionCard";
 
-import { TbCash, TbCashOff } from "react-icons/tb";
 import { BiDollarCircle } from "react-icons/bi";
 import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineArrowDown,
 } from "react-icons/ai";
-import { ExpenseResponse, TotalExpenseResponse } from "./Interfaces/Expense";
 
 const page = () => {
   const [latestTransaction, setLatestTransaction] =
@@ -60,21 +60,13 @@ const page = () => {
     getAllData();
   }, []);
 
-  const formatCurrency = (amount: any) => {
-    return amount?.toLocaleString("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  };
   console.log(income);
   console.log(expense);
   return (
     <Layout>
       <div className="w-full">
         <div className="xl:ml-7 mt-8 md:mt-0 md:flex md:mx-auto">
-          <div className="mx-auto align-middle mb-5 hidden xl:flex items-center lg:ml-7 mt-10">
+          <div className="mx-auto align-middle mb-2 hidden xl:flex items-center lg:ml-7 mt-10">
             <Charts
               income={totalIncome?.data ?? 0}
               expense={totalExpense?.data ?? 0}
@@ -117,7 +109,7 @@ const page = () => {
               </div>
             </div>
 
-            <div className=" bg-Highlight rounded-[20px] mt-3 px-3 pb-2 pt-3 w-full">
+            <div className=" bg-Highlight rounded-[20px] mt-3 px-3 pt-3 w-full h-fit">
               <h2 className="text-white text-xl mb-5 md:mb-1">
                 Latest Transaction
               </h2>
@@ -140,7 +132,7 @@ const page = () => {
           </div>
         </div>
 
-        <div className="md:flex md:justify-between text-white h-[36%] md:mt-2 xl:mt-3">
+        <div className="md:flex md:justify-between text-white h-[36%]">
           <div className="xl:ml-7 px-3 lg:px-0 lg:pl-3 md:w-[35%] mb-5">
             <Link href="/incomes">
               <div className="bg-Highlight p-5 rounded-[20px] text-white lg:mt-2 flex">

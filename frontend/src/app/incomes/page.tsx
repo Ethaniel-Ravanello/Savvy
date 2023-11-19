@@ -1,20 +1,44 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import { incomeAmount, totalIncome } from "../utils/TotalingMoney";
+import formatCurrency from "../utils/FormatCurrency";
+import { IncomeResponse } from "../Interfaces/Income";
 
 import Layout from "../Components/Layout";
-
-import { TbCurrencyDollar } from "react-icons/tb";
-import { FaSackDollar } from "react-icons/fa6";
-import { SlCalender } from "react-icons/sl";
-import { BiMessageRounded } from "react-icons/bi";
-import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
+import HistoryCard from "../Components/HistoryCard";
+import formatDate from "../utils/FormatDate";
 
 const page = () => {
+  const [incomeData, setIncomeData] = useState();
+
+  const userId = localStorage.getItem("Id");
+
+  const getIncome = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/income/${userId}`);
+      setIncomeData(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getIncome();
+  }, []);
+
+  const income: any = incomeAmount(incomeData);
+
   return (
     <Layout>
       <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto bg-Highlight rounded-[30px] px-10 py-7 ml-5">
         <h1 className="text-2xl mb-5 font-semibold">Incomes</h1>
         <div className="w-full bg-[#222222] mb-5 rounded-lg py-3">
-          <p className="text-center text-lg">Total Incomes: +Rp 6.250.000</p>
+          <p className="text-center text-lg">
+            Total Incomes: +{formatCurrency(totalIncome(income))}
+          </p>
         </div>
         <div className="w-full bg-[#222222] "></div>
         <div className="flex">
@@ -66,196 +90,15 @@ const page = () => {
           </div>
 
           <div className="w-[70%] h-[65vh] overflow-y-scroll overflow-x-hidden ml-5 scrollbar-thin scrollbar-thumb-primary-400">
-            <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <div>
-                    <FaSackDollar className="w-10 h-10 mt-2 mr-3" />
-                  </div>
-
-                  <div>
-                    <div className="flex mb-2">
-                      <div className="w-2 h-2 rounded-full bg-Success mt-2 mx-2"></div>
-                      <p>Hulo Hulo</p>
-                    </div>
-
-                    <div className="flex">
-                      <div className="flex">
-                        <TbCurrencyDollar className="w-5 h-5 ml-0.5 mr-1.5 font-bold mt-[1px]" />
-                        <p>3000</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <SlCalender className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>11-08-2023</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <BiMessageRounded className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>Main Paycheck</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-x-6">
-                  <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-                  <BsFillTrashFill className="w-6 h-6 my-4 justify-end" />
-                </div>
-              </div>
-            </div>
-            <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <div>
-                    <FaSackDollar className="w-10 h-10 mt-2 mr-3" />
-                  </div>
-
-                  <div>
-                    <div className="flex mb-2">
-                      <div className="w-2 h-2 rounded-full bg-Success mt-2 mx-2"></div>
-                      <p>Hulo Hulo</p>
-                    </div>
-
-                    <div className="flex">
-                      <div className="flex">
-                        <TbCurrencyDollar className="w-5 h-5 ml-0.5 mr-1.5 font-bold mt-[1px]" />
-                        <p>3000</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <SlCalender className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>11-08-2023</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <BiMessageRounded className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>Main Paycheck</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-x-6">
-                  <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-                  <BsFillTrashFill className="w-6 h-6 my-4 justify-end" />
-                </div>
-              </div>
-            </div>
-            <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <div>
-                    <FaSackDollar className="w-10 h-10 mt-2 mr-3" />
-                  </div>
-
-                  <div>
-                    <div className="flex mb-2">
-                      <div className="w-2 h-2 rounded-full bg-Success mt-2 mx-2"></div>
-                      <p>Hulo Hulo</p>
-                    </div>
-
-                    <div className="flex">
-                      <div className="flex">
-                        <TbCurrencyDollar className="w-5 h-5 ml-0.5 mr-1.5 font-bold mt-[1px]" />
-                        <p>3000</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <SlCalender className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>11-08-2023</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <BiMessageRounded className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>Main Paycheck</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-x-6">
-                  <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-                  <BsFillTrashFill className="w-6 h-6 my-4 justify-end" />
-                </div>
-              </div>
-            </div>
-            <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <div>
-                    <FaSackDollar className="w-10 h-10 mt-2 mr-3" />
-                  </div>
-
-                  <div>
-                    <div className="flex mb-2">
-                      <div className="w-2 h-2 rounded-full bg-Success mt-2 mx-2"></div>
-                      <p>Hulo Hulo</p>
-                    </div>
-
-                    <div className="flex">
-                      <div className="flex">
-                        <TbCurrencyDollar className="w-5 h-5 ml-0.5 mr-1.5 font-bold mt-[1px]" />
-                        <p>3000</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <SlCalender className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>11-08-2023</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <BiMessageRounded className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>Main Paycheck</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-x-6">
-                  <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-                  <BsFillTrashFill className="w-6 h-6 my-4 justify-end" />
-                </div>
-              </div>
-            </div>
-            <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <div>
-                    <FaSackDollar className="w-10 h-10 mt-2 mr-3" />
-                  </div>
-
-                  <div>
-                    <div className="flex mb-2">
-                      <div className="w-2 h-2 rounded-full bg-Success mt-2 mx-2"></div>
-                      <p>Hulo Hulo</p>
-                    </div>
-
-                    <div className="flex">
-                      <div className="flex">
-                        <TbCurrencyDollar className="w-5 h-5 ml-0.5 mr-1.5 font-bold mt-[1px]" />
-                        <p>3000</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <SlCalender className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>11-08-2023</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <BiMessageRounded className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>Main Paycheck</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-x-6">
-                  <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-                  <BsFillTrashFill className="w-6 h-6 my-4 justify-end" />
-                </div>
-              </div>
-            </div>
+            {incomeData?.map((data) => (
+              <HistoryCard
+                key={data._id}
+                name={data.income_name}
+                amount={formatCurrency(data.income_amount)}
+                date={formatDate(data.income_date)}
+                description={data.income_description}
+              />
+            ))}
           </div>
         </div>
       </div>
