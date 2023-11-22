@@ -9,7 +9,7 @@ import formatCurrency from "../utils/FormatCurrency";
 
 import Layout from "../Components/Layout";
 import HistoryCard from "../Components/HistoryCard";
-import formatDate from "../utils/FormatDate";
+import { formatDate, converMongoDbDate } from "../utils/FormatDate";
 
 const page = () => {
   const [incomeData, setIncomeData] = useState<IncomeCard[]>();
@@ -24,12 +24,16 @@ const page = () => {
 
   const userId = localStorage.getItem("Id");
   const income: any = incomeAmount(incomeData);
-  const convertMongoDBDate = (mongoDBDate: string): string => {
-    const date = new Date(mongoDBDate);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setCreateIncome((createIncome) => ({ ...createIncome, [name]: value }));
+  };
+  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setCreateIncome((createIncome) => ({ ...createIncome, [name]: value }));
   };
 
   const getIncome = async () => {
@@ -41,18 +45,6 @@ const page = () => {
     }
   };
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setCreateIncome((createIncome) => ({ ...createIncome, [name]: value }));
-  };
-
-  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setCreateIncome((createIncome) => ({ ...createIncome, [name]: value }));
-  };
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -61,7 +53,7 @@ const page = () => {
         type: "Income",
         incomeName: createIncome.incomeName,
         incomeDescription: createIncome.incomeDescription,
-        incomeDate: convertMongoDBDate(createIncome.incomeDate),
+        incomeDate: converMongoDbDate(createIncome.incomeDate),
         incomeAmount: createIncome.incomeAmount,
       });
       getIncome();
@@ -69,7 +61,6 @@ const page = () => {
       console.log(error);
     }
   };
-
   const handleDelete = async (incomeId: any) => {
     try {
       await axios.delete(`http://localhost:5000/income/${incomeId}`);
@@ -154,6 +145,7 @@ const page = () => {
                 key={data._id}
                 incomeId={data._id}
                 name={data.incomeName}
+                type={data.type}
                 amount={formatCurrency(data.incomeAmount)}
                 date={formatDate(data.incomeDate)}
                 description={data.incomeDescription}

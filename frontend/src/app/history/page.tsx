@@ -126,16 +126,10 @@ const page = () => {
                         ? formatDate(data.incomeDate)
                         : formatDate(data.expenseDate)}
                     </td>
-                    <td className="flex items-center px-6 py-4 space-x-3">
+                    <td className="items-center flex justify-center pt-7">
                       <a
                         href="#"
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      >
-                        <BsFillPencilFill />
-                      </a>
-                      <a
-                        href="#"
-                        className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                        className="font-medium text-red-600 dark:text-red-500 hover:underline items-center"
                       >
                         <BsFillTrashFill />
                       </a>

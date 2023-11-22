@@ -28,9 +28,9 @@ const page = () => {
   const [expense, setExpense] = useState<ExpenseResponse[]>();
   const [totalExpense, setTotalExpense] = useState<TotalExpenseResponse>();
 
+  const userId = localStorage.getItem("Id");
   const navigate = useRouter();
   const getAllData = async () => {
-    const userId = localStorage.getItem("Id");
     try {
       const [latestTransaction, income, totalIncome, expense, totalExpense] =
         await axios.all([
@@ -60,8 +60,7 @@ const page = () => {
     getAllData();
   }, []);
 
-  console.log(income);
-  console.log(expense);
+  console.log(userId);
   return (
     <Layout>
       <div className="w-full">
@@ -113,7 +112,7 @@ const page = () => {
               <h2 className="text-white text-xl mb-5 md:mb-1">
                 Latest Transaction
               </h2>
-              <div className="md:flex md:flex-wrap lg:max-h-[200px] overflow-y-scroll">
+              <div className="md:flex md:flex-wrap lg:max-h-[200px] overflow-y-scroll scrollbar-thin scrollbar-thumb-white">
                 {latestTransaction?.map((data: TransactionResponse) => (
                   <div className="md:m-5">
                     <TransactionCard
@@ -132,7 +131,7 @@ const page = () => {
           </div>
         </div>
 
-        <div className="md:flex md:justify-between text-white h-[36%]">
+        <div className="md:flex md:justify-between text-white h-[36%] md:mt-5">
           <div className="xl:ml-7 px-3 lg:px-0 lg:pl-3 md:w-[35%] mb-5">
             <Link href="/incomes">
               <div className="bg-Highlight p-5 rounded-[20px] text-white lg:mt-2 flex">

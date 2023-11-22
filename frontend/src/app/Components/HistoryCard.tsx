@@ -13,6 +13,7 @@ const HistoryCard = ({
   amount,
   incomeId,
   handleDelete,
+  type,
 }: any) => {
   console.log(incomeId);
   return (
@@ -25,14 +26,17 @@ const HistoryCard = ({
 
           <div>
             <div className="flex mb-2">
-              <div className="w-2 h-2 rounded-full bg-Success mt-2 mx-2"></div>
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  type === "Income" ? "bg-Success" : "bg-red-600"
+                } mt-2 mx-2`}
+              ></div>
               <p>{name}</p>
             </div>
 
             <div className="flex">
               <div className="flex">
-                <TbCurrencyDollar className="w-5 h-5 ml-0.5 mr-1.5 font-bold mt-[1px]" />
-                <p>{amount}</p>
+                <p className="ml-2">{amount}</p>
               </div>
 
               <div className="flex ml-8">
@@ -48,14 +52,11 @@ const HistoryCard = ({
           </div>
         </div>
 
-        <div className="flex gap-x-3">
-          <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-          <div className="hover:bg-[#383838] px-3 rounded-lg">
-            <BsFillTrashFill
-              className="w-6 h-6 my-4 justify-end"
-              onClick={() => handleDelete(incomeId)}
-            />
-          </div>
+        <div className="hover:bg-[#383838] px-3 rounded-lg hover:cursor-pointer">
+          <BsFillTrashFill
+            className="w-6 h-6 my-4 justify-end"
+            onClick={() => handleDelete(incomeId)}
+          />
         </div>
       </div>
     </div>

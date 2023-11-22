@@ -14,6 +14,7 @@ interface TotalIncomeResponse {
 interface IncomeCard {
   _id: string;
   incomeAmount: string;
+  type: string;
   incomeName: string;
   incomeDate: string;
   incomeDescription: string;

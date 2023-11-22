@@ -14,6 +14,7 @@ interface TotalExpenseResponse {
 interface ExpenseCard {
   _id: string;
   expenseAmount: string;
+  type: string;
   expenseName: string;
   expenseDate: string;
   expenseDescription: string;
