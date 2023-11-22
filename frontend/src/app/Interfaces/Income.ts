@@ -1,7 +1,7 @@
 interface IncomeResponse {
   id: number;
   type: string;
-  income_amount: number;
+  incomeAmount: number;
 }
 
 interface TotalIncomeResponse {
@@ -11,10 +11,24 @@ interface TotalIncomeResponse {
   data: number;
 }
 
+interface IncomeCard {
+  _id: string;
+  incomeAmount: string;
+  incomeName: string;
+  incomeDate: string;
+  incomeDescription: string;
+  handleDelete: (incomeId: string) => void;
+}
+
 interface DeleteIncomeResponse {
   status: number;
   message: string;
   error: boolean;
 }
 
-export type { IncomeResponse, DeleteIncomeResponse, TotalIncomeResponse };
+export type {
+  IncomeResponse,
+  DeleteIncomeResponse,
+  TotalIncomeResponse,
+  IncomeCard,
+};

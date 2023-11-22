@@ -12,18 +12,18 @@ const IncomeSchema = new mongoose.Schema(
       enum: ["Income", "Expense"],
       required: true,
     },
-    income_name: {
+    incomeName: {
       type: String,
       required: true,
     },
-    income_description: {
+    incomeDescription: {
       type: String,
     },
-    income_date: {
+    incomeDate: {
       type: Date,
       required: true,
     },
-    income_amount: {
+    incomeAmount: {
       type: Number,
       required: true,
     },

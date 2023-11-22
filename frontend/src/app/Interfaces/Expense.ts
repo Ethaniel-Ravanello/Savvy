@@ -1,7 +1,7 @@
 interface ExpenseResponse {
   id: number;
   type: string;
-  expenses_amount: number;
+  expenseAmount: number;
 }
 
 interface TotalExpenseResponse {
@@ -11,10 +11,13 @@ interface TotalExpenseResponse {
   data: number;
 }
 
-interface DeleteExpenseResponse {
-  status: number;
-  message: string;
-  error: boolean;
+interface ExpenseCard {
+  _id: string;
+  expenseAmount: string;
+  expenseName: string;
+  expenseDate: string;
+  expenseDescription: string;
+  handleDelete: (incomeId: string) => void;
 }
 
-export type { ExpenseResponse, DeleteExpenseResponse, TotalExpenseResponse };
+export type { ExpenseResponse, ExpenseCard, TotalExpenseResponse };

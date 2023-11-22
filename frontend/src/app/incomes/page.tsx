@@ -1,20 +1,36 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import axios from "axios";
 
 import { incomeAmount, totalIncome } from "../utils/TotalingMoney";
+import { IncomeCard } from "../Interfaces/Income";
 import formatCurrency from "../utils/FormatCurrency";
-import { IncomeResponse } from "../Interfaces/Income";
 
 import Layout from "../Components/Layout";
 import HistoryCard from "../Components/HistoryCard";
 import formatDate from "../utils/FormatDate";
 
 const page = () => {
-  const [incomeData, setIncomeData] = useState();
+  const [incomeData, setIncomeData] = useState<IncomeCard[]>();
+  const [createIncome, setCreateIncome] = useState({
+    userId: "",
+    type: "",
+    incomeName: "",
+    incomeDescription: "",
+    incomeDate: "",
+    incomeAmount: 0,
+  });
 
   const userId = localStorage.getItem("Id");
+  const income: any = incomeAmount(incomeData);
+  const convertMongoDBDate = (mongoDBDate: string): string => {
+    const date = new Date(mongoDBDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   const getIncome = async () => {
     try {
@@ -25,12 +41,47 @@ const page = () => {
     }
   };
 
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setCreateIncome((createIncome) => ({ ...createIncome, [name]: value }));
+  };
+
+  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setCreateIncome((createIncome) => ({ ...createIncome, [name]: value }));
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      await axios.post(`http://localhost:5000/income`, {
+        userId: userId,
+        type: "Income",
+        incomeName: createIncome.incomeName,
+        incomeDescription: createIncome.incomeDescription,
+        incomeDate: convertMongoDBDate(createIncome.incomeDate),
+        incomeAmount: createIncome.incomeAmount,
+      });
+      getIncome();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (incomeId: any) => {
+    try {
+      await axios.delete(`http://localhost:5000/income/${incomeId}`);
+      getIncome();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getIncome();
   }, []);
-
-  const income: any = incomeAmount(incomeData);
-
   return (
     <Layout>
       <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto bg-Highlight rounded-[30px] px-10 py-7 ml-5">
@@ -43,11 +94,13 @@ const page = () => {
         <div className="w-full bg-[#222222] "></div>
         <div className="flex">
           <div className="w-[30%]">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-6">
                 <input
                   type="text"
-                  id="name"
+                  id="incomeName"
+                  name="incomeName"
+                  onChange={handleChange}
                   className="shadow-sm border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   placeholder="Enter The Income Source"
                   required
@@ -56,7 +109,9 @@ const page = () => {
               <div className="mb-6">
                 <input
                   type="number"
-                  id="amount"
+                  id="incomeAmount"
+                  name="incomeAmount"
+                  onChange={handleChange}
                   className="shadow-sm border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   placeholder="Enter The Income Amount"
                   required
@@ -65,7 +120,9 @@ const page = () => {
               <div className="mb-6">
                 <input
                   type="date"
-                  id="Date"
+                  id="incomeDate"
+                  name="incomeDate"
+                  onChange={handleChange}
                   className="shadow-sm border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   placeholder="Enter The Income Date"
                   required
@@ -73,7 +130,9 @@ const page = () => {
               </div>
               <div className="mb-6">
                 <textarea
-                  id="Description"
+                  id="incomeDescription"
+                  name="incomeDescription"
+                  onChange={handleTextAreaChange}
                   className="shadow-sm border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   placeholder="Enter The Income Description"
                   required
@@ -93,10 +152,12 @@ const page = () => {
             {incomeData?.map((data) => (
               <HistoryCard
                 key={data._id}
-                name={data.income_name}
-                amount={formatCurrency(data.income_amount)}
-                date={formatDate(data.income_date)}
-                description={data.income_description}
+                incomeId={data._id}
+                name={data.incomeName}
+                amount={formatCurrency(data.incomeAmount)}
+                date={formatDate(data.incomeDate)}
+                description={data.incomeDescription}
+                handleDelete={handleDelete}
               />
             ))}
           </div>

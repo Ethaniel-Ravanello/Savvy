@@ -46,7 +46,7 @@ const getExpensesById = async (req, res) => {
 const createExpense = async (req, res) => {
   try {
     const newExpense = new Expenses(req.body);
-    const saveExpense = newExpense.save();
+    const saveExpense = await newExpense.save();
 
     return res.status(200).json({
       status: res.statusCode,
@@ -109,7 +109,7 @@ const getTotalExpense = async (req, res) => {
     const response = await Expenses.find({ userId: userId });
 
     const totalExpense = response.reduce(
-      (total, expense) => total + expense.expenses_amount,
+      (total, expense) => total + expense.expenseAmount,
       0
     );
 

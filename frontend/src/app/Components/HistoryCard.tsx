@@ -6,7 +6,15 @@ import { SlCalender } from "react-icons/sl";
 import { BiMessageRounded } from "react-icons/bi";
 import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
 
-const HistoryCard = ({ name, description, date, amount }: any) => {
+const HistoryCard = ({
+  name,
+  description,
+  date,
+  amount,
+  incomeId,
+  handleDelete,
+}: any) => {
+  console.log(incomeId);
   return (
     <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
       <div className="flex justify-between">
@@ -40,9 +48,14 @@ const HistoryCard = ({ name, description, date, amount }: any) => {
           </div>
         </div>
 
-        <div className="flex gap-x-6">
+        <div className="flex gap-x-3">
           <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-          <BsFillTrashFill className="w-6 h-6 my-4 justify-end" />
+          <div className="hover:bg-[#383838] px-3 rounded-lg">
+            <BsFillTrashFill
+              className="w-6 h-6 my-4 justify-end"
+              onClick={() => handleDelete(incomeId)}
+            />
+          </div>
         </div>
       </div>
     </div>

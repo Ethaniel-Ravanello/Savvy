@@ -91,9 +91,8 @@ const createIncome = async (req, res) => {
 };
 
 const deleteIncomeById = async (req, res) => {
-  const { userId } = req.body;
   try {
-    await Income.deleteOne({ _id: req.params.id, userId: userId });
+    await Income.deleteOne({ _id: req.params.id });
     return res.status(200).json({
       status: res.statusCode,
       error: false,
@@ -110,7 +109,7 @@ const getTotalIncome = async (req, res) => {
     const response = await Income.find({ userId: userId });
     console.log(response);
     const totalIncome = response.reduce(
-      (total, income) => total + income.income_amount,
+      (total, income) => total + income.incomeAmount,
       0
     );
 

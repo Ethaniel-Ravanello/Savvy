@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { HistoryResponse } from "../Interfaces/Latest";
 import Layout from "../Components/Layout";
 
 import { BsFillPencilFill, BsFillTrashFill } from "react-icons/bs";
 
 const page = () => {
-  const [transactionData, setTransactionData] = useState();
+  const [transactionData, setTransactionData] = useState<HistoryResponse[]>();
 
   const userId = localStorage.getItem("Id");
 
@@ -108,23 +108,23 @@ const page = () => {
                     </th>
                     <td className="px-6 py-4">
                       {data.type === "Income"
-                        ? data.income_name
-                        : data.expenses_name}
+                        ? data.incomeName
+                        : data.expenseName}
                     </td>
                     <td className="px-6 py-4">
                       {data.type === "Income"
-                        ? data.income_amount
-                        : data.expenses_amount}
+                        ? data.incomeAmount
+                        : data.expenseAmount}
                     </td>
                     <td className="px-6 py-4">
                       {data.type === "Income"
-                        ? data.income_description
-                        : data.expenses_description}
+                        ? data.incomeDescription
+                        : data.expenseDescription}
                     </td>
                     <td className="px-6 py-4">
                       {data.type === "Income"
-                        ? formatDate(data.income_date)
-                        : formatDate(data.expense_date)}
+                        ? formatDate(data.incomeDate)
+                        : formatDate(data.expenseDate)}
                     </td>
                     <td className="flex items-center px-6 py-4 space-x-3">
                       <a

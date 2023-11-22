@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { IncomeResponse, TotalIncomeResponse } from "./Interfaces/Income";
 import { ExpenseResponse, TotalExpenseResponse } from "./Interfaces/Expense";
-import TransactionResponse from "./Interfaces/Latest";
+import { TransactionResponse } from "./Interfaces/Latest";
 import formatCurrency from "./utils/FormatCurrency";
 
 import Layout from "./Components/Layout";
@@ -65,7 +65,7 @@ const page = () => {
   return (
     <Layout>
       <div className="w-full">
-        <div className="xl:ml-7 mt-8 md:mt-0 md:flex md:mx-auto">
+        <div className="xl:ml-7 mt-8 md:mt-0 md:flex ">
           <div className="mx-auto align-middle mb-2 hidden xl:flex items-center lg:ml-7 mt-10">
             <Charts
               income={totalIncome?.data ?? 0}
@@ -113,7 +113,7 @@ const page = () => {
               <h2 className="text-white text-xl mb-5 md:mb-1">
                 Latest Transaction
               </h2>
-              <div className="md:flex md:flex-wrap">
+              <div className="md:flex md:flex-wrap lg:max-h-[200px] overflow-y-scroll">
                 {latestTransaction?.map((data: TransactionResponse) => (
                   <div className="md:m-5">
                     <TransactionCard
@@ -121,8 +121,8 @@ const page = () => {
                       type={data.type}
                       amount={
                         data.type === "Income"
-                          ? formatCurrency(data.income_amount)
-                          : formatCurrency(data.expenses_amount)
+                          ? formatCurrency(data.incomeAmount)
+                          : formatCurrency(data.expenseAmount)
                       }
                     />
                   </div>
@@ -150,7 +150,7 @@ const page = () => {
           </div>
 
           <div className="px-3 lg:pr-3 lg:px-0 pb-3 md:pb-0 md:flex md:justify-between md:w-[65%] md:ml-5">
-            <div className="bg-Highlight rounded-[20px] p-4 mb-5 md:mb-0 md:w-full md:mr-4">
+            <div className="bg-Highlight rounded-[20px] p-4 mb-5 md:mb-0 md:w-full md:mr-4 lg:max-h-[200px]">
               <div className="flex w-full justify-between">
                 <p className=" lg:text-xl font-semibold -mt-1.5 md:pt-1">
                   Latest Incomes
@@ -164,7 +164,7 @@ const page = () => {
                 {income?.map((data) => (
                   <div className="pt-2">
                     <TransactionCard
-                      amount={formatCurrency(data.income_amount)}
+                      amount={formatCurrency(data.incomeAmount)}
                       type={data.type}
                       key={data.id}
                     />
@@ -173,7 +173,7 @@ const page = () => {
               </div>
             </div>
 
-            <div className="bg-Highlight rounded-[20px] p-4 md:w-full md:ml-4">
+            <div className="bg-Highlight rounded-[20px] p-4 md:w-full md:ml-4 lg:max-h-[200px]">
               <div className="flex w-full justify-between">
                 <p className="lg:text-xl font-semibold -mt-1.5 md:pt-1">
                   Latest Expenses
@@ -187,7 +187,7 @@ const page = () => {
                 {expense?.map((data) => (
                   <div className="pt-2">
                     <TransactionCard
-                      amount={formatCurrency(data.expenses_amount)}
+                      amount={formatCurrency(data.expenseAmount)}
                       type={data.type}
                       key={data.id}
                     />

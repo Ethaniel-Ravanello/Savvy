@@ -1,11 +1,7 @@
-interface Transaction {
-  income_amount?: number;
-  expense_amount?: number;
-}
-
-const incomeAmount = (incomeData: Transaction[] = []) => {
+const incomeAmount = (incomeData: any) => {
   return (
-    incomeData?.map((data) => data.income_amount || data.expense_amount) || []
+    incomeData?.map((data: any) => data.incomeAmount || data.expenseAmount) ||
+    []
   );
 };
 

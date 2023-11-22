@@ -1,14 +1,32 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import formatDate from "../utils/FormatDate";
+import formatCurrency from "../utils/FormatCurrency";
 
 import Layout from "../Components/Layout";
-
-import { TbCurrencyDollar } from "react-icons/tb";
-import { FaSackDollar } from "react-icons/fa6";
-import { SlCalender } from "react-icons/sl";
-import { BiMessageRounded } from "react-icons/bi";
-import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
+import HistoryCard from "../Components/HistoryCard";
 
 const page = () => {
+  const [expenseData, setExpenseData] = useState();
+
+  const userId = localStorage.getItem("Id");
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/expense/${userId}`);
+      setExpenseData(res.data.data);
+      console.log(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <Layout>
       <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto bg-Highlight rounded-[30px] px-10 py-7 ml-5">
@@ -66,44 +84,17 @@ const page = () => {
           </div>
 
           <div className="w-[70%] h-[65vh] overflow-y-scroll overflow-x-hidden ml-5 scrollbar-thin scrollbar-thumb-primary-400">
-            <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <div>
-                    <FaSackDollar className="w-10 h-10 mt-2 mr-3" />
-                  </div>
-
-                  <div>
-                    <div className="flex mb-2">
-                      <div className="w-2 h-2 rounded-full bg-red-700 mt-2 mx-2"></div>
-                      <p>Hulo Hulo</p>
-                    </div>
-
-                    <div className="flex">
-                      <div className="flex">
-                        <TbCurrencyDollar className="w-5 h-5 ml-0.5 mr-1.5 font-bold mt-[1px]" />
-                        <p>3000</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <SlCalender className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>11-08-2023</p>
-                      </div>
-
-                      <div className="flex ml-8">
-                        <BiMessageRounded className="w-5 h-5 ml-0.5 mr-1.5 font-bold" />
-                        <p>Main Paycheck</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-x-6">
-                  <BsPencilFill className="w-6 h-6 my-4 justify-end" />
-                  <BsFillTrashFill className="w-6 h-6 my-4 justify-end" />
-                </div>
-              </div>
-            </div>
+            {expenseData?.map((data) => (
+              <HistoryCard
+                key={data._id}
+                incomeId={data._id}
+                name={data.expenseName}
+                amount={formatCurrency(data.expenseAmount)}
+                date={formatDate(data.expenseDate)}
+                description={data.expenseDescription}
+                // handleDelete={handleDelete}
+              />
+            ))}
           </div>
         </div>
       </div>

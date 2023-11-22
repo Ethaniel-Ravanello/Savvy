@@ -23,8 +23,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       >
         <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
-      <div className="md:p-3 lg:flex w-screen">
-        <div className="hidden lg:block">
+      <div className="md:p-3 lg:flex">
+        <div className="hidden lg:block h-[calc(100vh-30px)]">
           <Sidebar />
         </div>
 

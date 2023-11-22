@@ -1,8 +1,21 @@
 interface TransactionResponse {
   id: number;
   type: string;
-  income_amount: number;
-  expenses_amount: number;
+  incomeAmount: number;
+  expenseAmount: number;
 }
 
-export default TransactionResponse;
+interface HistoryResponse {
+  _id: string;
+  type: string;
+  incomeName: string;
+  expenseName: string;
+  incomeAmount: number;
+  expenseAmount: number;
+  incomeDescription: string;
+  expenseDescription: string;
+  incomeDate: string;
+  expenseDate: string;
+}
+
+export type { TransactionResponse, HistoryResponse };
