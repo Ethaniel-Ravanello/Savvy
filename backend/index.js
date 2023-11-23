@@ -5,7 +5,7 @@ const UserRoutes = require("./Routes/UserRoutes");
 const AuthRoutes = require("./Routes/AuthRoutes");
 const IncomeRoutes = require("./Routes/IncomeRoutes");
 const ExpenseRoutes = require("./Routes/ExpenseRoutes");
-const latestTransactionRoutes = require("./Routes/LatestTransactionRoute");
+const TransactionRoutes = require("./Routes/TransactionRoute");
 
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -29,6 +29,6 @@ app.use(UserRoutes);
 app.use(AuthRoutes);
 app.use(IncomeRoutes);
 app.use(ExpenseRoutes);
-app.use(latestTransactionRoutes);
+app.use(TransactionRoutes);
 
 app.listen(5000, () => console.log("Server is Up and Running"));
