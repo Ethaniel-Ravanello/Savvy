@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { AiFillHome } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
@@ -10,6 +13,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = () => {
   const navigate = useRouter();
+  const pathname = usePathname();
 
   const handleSignOut = () => {
     localStorage.clear();
@@ -33,7 +37,9 @@ const Sidebar = () => {
           <ul className="text-lg">
             <Link
               href="/"
-              className="flex w-full hover:bg-[#222222] rounded-lg"
+              className={`flex w-full  rounded-lg ${
+                pathname === "/" ? "bg-Secondary" : "hover:bg-[#222222]"
+              }`}
             >
               <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">
@@ -45,9 +51,11 @@ const Sidebar = () => {
 
             <Link
               href="/setting"
-              className="flex hover:bg-[#222222] rounded-lg"
+              className={`flex  rounded-lg ${
+                pathname === "/setting" ? "bg-Secondary" : "hover:bg-[#222222]"
+              }`}
             >
-              <li className="flex hover:bg-[#222222] p-3 ">
+              <li className="flex p-3 ">
                 <div className="bg-[#222222] rounded-full">
                   <BsFillPersonFill className="m-2.5" />
                 </div>
@@ -65,7 +73,9 @@ const Sidebar = () => {
           <ul className="text-lg">
             <Link
               href="/history"
-              className="flex hover:bg-[#222222] rounded-lg"
+              className={`flex  rounded-lg ${
+                pathname === "/history" ? "bg-Secondary" : "hover:bg-[#222222]"
+              }`}
             >
               <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">
@@ -77,7 +87,9 @@ const Sidebar = () => {
 
             <Link
               href="/incomes"
-              className="flex rounded-lg hover:bg-[#222222]"
+              className={`flex rounded-lg  ${
+                pathname === "/incomes" ? "bg-Secondary" : "hover:bg-[#222222]"
+              }`}
             >
               <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">
@@ -89,7 +101,9 @@ const Sidebar = () => {
 
             <Link
               href="/expenses"
-              className="flex rounded-lg hover:bg-[#222222]"
+              className={`flex rounded-lg  ${
+                pathname === "/expenses" ? "bg-Secondary" : "hover:bg-[#222222]"
+              }`}
             >
               <li className="flex p-3">
                 <div className="bg-[#222222] rounded-full">

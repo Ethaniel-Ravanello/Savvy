@@ -1,9 +1,10 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
-import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import axios from "axios";
+
+import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 
 interface ApiResponse {
   status: number;
@@ -271,7 +272,7 @@ const RegisterPage = () => {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="w-full text-white  bg-Secondary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                  className="w-full text-white  bg-primary active:bg-primary-click hover:bg-primary-hover focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                 >
                   Sign up
                 </button>

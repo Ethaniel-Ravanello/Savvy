@@ -1,15 +1,18 @@
 "use client";
 
 import React, { useEffect, useState, ChangeEvent } from "react";
+import { useExpiredToken, useUserId } from "@/hooks/useToken";
+import { NumericFormat } from "react-number-format";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
-import { incomeAmount, totalIncome } from "../utils/TotalingMoney";
-import { IncomeCard } from "../Interfaces/Income";
-import formatCurrency from "../utils/FormatCurrency";
+import { incomeAmount, totalIncome } from "@/utils/totalingMoney";
+import { formatDate, converMongoDbDate } from "@/utils/formatDate";
+import { IncomeCard } from "@/interfaces/Income";
+import formatCurrency from "@/utils/formatCurrency";
 
-import Layout from "../Components/Layout";
-import HistoryCard from "../Components/HistoryCard";
-import { formatDate, converMongoDbDate } from "../utils/FormatDate";
+import Layout from "@/app/components/layout";
+import HistoryCard from "@/app/components/historyCard";
 
 const page = () => {
   const [incomeData, setIncomeData] = useState<IncomeCard[]>();
@@ -19,11 +22,13 @@ const page = () => {
     incomeName: "",
     incomeDescription: "",
     incomeDate: "",
-    incomeAmount: 0,
+    incomeAmount: "",
   });
 
-  const userId = localStorage.getItem("Id");
+  const userId = useUserId();
   const income: any = incomeAmount(incomeData);
+  const navigate = useRouter();
+  const isExpired = useExpiredToken();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -54,16 +59,26 @@ const page = () => {
         incomeName: createIncome.incomeName,
         incomeDescription: createIncome.incomeDescription,
         incomeDate: converMongoDbDate(createIncome.incomeDate),
-        incomeAmount: createIncome.incomeAmount,
+        incomeAmount: Number(createIncome.incomeAmount.replace(/,/g, "")),
       });
       getIncome();
+      setCreateIncome({
+        userId: "",
+        type: "",
+        incomeName: "",
+        incomeDescription: "",
+        incomeDate: "",
+        incomeAmount: "",
+      });
     } catch (error) {
       console.log(error);
     }
   };
-  const handleDelete = async (incomeId: any) => {
+  const handleDelete = async (transactionId: any) => {
     try {
-      await axios.delete(`http://localhost:5000/income/${incomeId}`);
+      await axios.delete(
+        `http://localhost:5000/delete/transaction/Income/${transactionId}`
+      );
       getIncome();
     } catch (error) {
       console.log(error);
@@ -71,11 +86,18 @@ const page = () => {
   };
 
   useEffect(() => {
+    if (isExpired) {
+      navigate.push("/login");
+      localStorage.clear();
+    }
+  });
+
+  useEffect(() => {
     getIncome();
   }, []);
   return (
     <Layout>
-      <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto bg-Highlight rounded-[30px] px-10 py-7 ml-5">
+      <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
         <h1 className="text-2xl mb-5 font-semibold">Incomes</h1>
         <div className="w-full bg-[#222222] mb-5 rounded-lg py-3">
           <p className="text-center text-lg">
@@ -98,14 +120,13 @@ const page = () => {
                 />
               </div>
               <div className="mb-6">
-                <input
-                  type="number"
-                  id="incomeAmount"
+                <NumericFormat
                   name="incomeAmount"
                   onChange={handleChange}
-                  className="shadow-sm border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   placeholder="Enter The Income Amount"
-                  required
+                  allowLeadingZeros
+                  thousandSeparator=","
+                  className="shadow-sm border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 />
               </div>
               <div className="mb-6">
@@ -132,7 +153,7 @@ const page = () => {
 
               <button
                 type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white bg-primary active:bg-primary-click hover:bg-primary-hover focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 Add Income
               </button>

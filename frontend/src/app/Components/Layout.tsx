@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 
-import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
+import Sidebar from "./sidebar";
+import Navbar from "./navbar";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 
@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <div>
       <GiHamburgerMenu
         onClick={() => setIsOpen(!isOpen)}
-        className="text-white w-8 h-8 absolute z-10 md:mt-5 ml-5 lg:hidden"
+        className="text-white w-8 h-8 absolute z-10 ml-3 mt-2 md:mt-5 md:ml-5 lg:hidden"
       />
       <div
         className={

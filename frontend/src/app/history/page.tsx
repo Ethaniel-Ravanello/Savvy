@@ -1,16 +1,22 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useExpiredToken, useUserId } from "@/hooks/useToken";
+import { useRouter } from "next/navigation";
 import axios from "axios";
-import { HistoryResponse } from "../Interfaces/Latest";
-import Layout from "../Components/Layout";
 
-import { BsFillPencilFill, BsFillTrashFill } from "react-icons/bs";
+import { HistoryResponse } from "@/interfaces/Latest";
+import Layout from "@/app/components/layout";
+import formatCurrency from "@/utils/formatCurrency";
+
+import { BsFillTrashFill } from "react-icons/bs";
 
 const page = () => {
   const [transactionData, setTransactionData] = useState<HistoryResponse[]>();
 
-  const userId = localStorage.getItem("Id");
+  const userId = useUserId();
+  const isExpired = useExpiredToken();
+  const navigate = useRouter();
 
   const getTransaction = async () => {
     try {
@@ -23,6 +29,13 @@ const page = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (isExpired) {
+      navigate.push("/login");
+      localStorage.clear();
+    }
+  });
 
   useEffect(() => {
     getTransaction();
@@ -39,10 +52,10 @@ const page = () => {
   };
   return (
     <Layout>
-      <div className="text-white h-[calc(100vh-30px)] w-full overflow-x-auto overflow-y-auto lg:bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
+      <div className="text-white h-[calc(100vh-30px)] w-full lg:bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
         <h1 className="text-2xl mb-5 mt-5 lg:mt-0">Transaction History</h1>
 
-        <div className="overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg max-h-[450px] scrollbar-thin scrollbar-thumb-white">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#222222] dark:text-gray-400">
               <tr>
@@ -113,8 +126,8 @@ const page = () => {
                     </td>
                     <td className="px-6 py-4">
                       {data.type === "Income"
-                        ? data.incomeAmount
-                        : data.expenseAmount}
+                        ? formatCurrency(data.incomeAmount)
+                        : formatCurrency(data.expenseAmount)}
                     </td>
                     <td className="px-6 py-4">
                       {data.type === "Income"

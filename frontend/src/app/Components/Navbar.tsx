@@ -10,11 +10,11 @@ import { TbPigMoney } from "react-icons/tb";
 const Navbar = ({ isOpen, setIsOpen }: any) => {
   return (
     <>
-      <div className="bg-black/50 h-full w-full absolute"></div>
-      <div className="h-full w-[300px] bg-Highlight z-20 absolute p-5 text-white">
+      <div className="bg-black/50 h-full w-full absolute lg:hidden"></div>
+      <div className="h-full w-[300px] bg-Highlight z-20 absolute p-5 text-white lg:hidden">
         <RxCross1
           onClick={() => setIsOpen(!isOpen)}
-          className="ml-auto w-7 h-7 mb-7 mt-8"
+          className="ml-auto w-7 h-7 mb-4 mt-7"
         />
         <h2 className="text-xl font-semibold">Welcome Back, Maleficent</h2>
         <div className="w-full h-[2px] bg-[#2f2f2f] mt-5"></div>
@@ -33,7 +33,7 @@ const Navbar = ({ isOpen, setIsOpen }: any) => {
             </li>
 
             <li className="flex mb-2">
-              <Link href="/" className="flex">
+              <Link href="/setting" className="flex">
                 <div className="bg-[#222222] rounded-full">
                   <BsFillPersonFill className="m-2.5" />
                 </div>
@@ -50,7 +50,7 @@ const Navbar = ({ isOpen, setIsOpen }: any) => {
 
           <ul className="text-lg">
             <li className="flex mb-3">
-              <Link href="/" className="flex">
+              <Link href="/history" className="flex">
                 <div className="bg-[#222222] rounded-full">
                   <TbPigMoney className="m-2.5" />
                 </div>
@@ -59,7 +59,7 @@ const Navbar = ({ isOpen, setIsOpen }: any) => {
             </li>
 
             <li className="flex mb-2">
-              <Link href="/" className="flex">
+              <Link href="/incomes" className="flex">
                 <div className="bg-[#222222] rounded-full">
                   <MdAttachMoney className="m-2.5" />
                 </div>
@@ -68,7 +68,7 @@ const Navbar = ({ isOpen, setIsOpen }: any) => {
             </li>
 
             <li className="flex mb-2">
-              <Link href="/" className="flex">
+              <Link href="/expenses" className="flex">
                 <div className="bg-[#222222] rounded-full">
                   <MdMoneyOff className="m-2.5" />
                 </div>

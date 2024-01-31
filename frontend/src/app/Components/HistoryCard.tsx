@@ -1,10 +1,9 @@
 import React from "react";
 
-import { TbCurrencyDollar } from "react-icons/tb";
 import { FaSackDollar } from "react-icons/fa6";
 import { SlCalender } from "react-icons/sl";
 import { BiMessageRounded } from "react-icons/bi";
-import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
+import { BsFillTrashFill } from "react-icons/bs";
 
 const HistoryCard = ({
   name,
@@ -15,7 +14,6 @@ const HistoryCard = ({
   handleDelete,
   type,
 }: any) => {
-  console.log(incomeId);
   return (
     <div className="w-full bg-[#222222] h-fit  rounded-lg p-3 mb-3">
       <div className="flex justify-between">

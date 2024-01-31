@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import { useExpiredToken, useUserId } from "./hooks/useToken";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import axios from "axios";
 
-import { IncomeResponse, TotalIncomeResponse } from "./Interfaces/Income";
-import { ExpenseResponse, TotalExpenseResponse } from "./Interfaces/Expense";
-import { TransactionResponse } from "./Interfaces/Latest";
-import formatCurrency from "./utils/FormatCurrency";
-
-import Layout from "./Components/Layout";
-import Charts from "./Components/Chart";
-import TransactionCard from "./Components/TransactionCard";
+import { IncomeResponse, TotalIncomeResponse } from "@/interfaces/Income";
+import { ExpenseResponse, TotalExpenseResponse } from "@/interfaces/Expense";
+import { TransactionResponse } from "@/interfaces/Latest";
+import formatCurrency from "@/utils/formatCurrency";
+import Layout from "@/app/components/layout";
+import Charts from "@/components/Chart";
+import TransactionCard from "@/components/transactionCard";
 
 import { BiDollarCircle } from "react-icons/bi";
 import {
@@ -28,8 +28,10 @@ const page = () => {
   const [expense, setExpense] = useState<ExpenseResponse[]>();
   const [totalExpense, setTotalExpense] = useState<TotalExpenseResponse>();
 
-  const userId = localStorage.getItem("Id");
+  const userId = useUserId();
+  const isExpired = useExpiredToken();
   const navigate = useRouter();
+
   const getAllData = async () => {
     try {
       const [latestTransaction, income, totalIncome, expense, totalExpense] =
@@ -50,9 +52,9 @@ const page = () => {
     }
   };
   useEffect(() => {
-    const token = localStorage.getItem("Token");
-    if (!token) {
+    if (isExpired) {
       navigate.push("/login");
+      localStorage.clear();
     }
   });
 
@@ -60,11 +62,10 @@ const page = () => {
     getAllData();
   }, []);
 
-  console.log(userId);
   return (
     <Layout>
       <div className="w-full">
-        <div className="xl:ml-7 mt-8 md:mt-0 md:flex ">
+        <div className="xl:ml-7 md:flex ">
           <div className="mx-auto align-middle mb-2 hidden xl:flex items-center lg:ml-7 mt-10">
             <Charts
               income={totalIncome?.data ?? 0}
