@@ -10,7 +10,7 @@ import { ExpenseResponse, TotalExpenseResponse } from "@/interfaces/Expense";
 import { TransactionResponse } from "@/interfaces/Latest";
 import formatCurrency from "@/utils/formatCurrency";
 import Layout from "@/app/components/layout";
-import Charts from "@/components/Chart";
+import Charts from "@/app/components/chart";
 import TransactionCard from "@/components/transactionCard";
 
 import { BiDollarCircle } from "react-icons/bi";
