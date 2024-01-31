@@ -17,14 +17,15 @@ const getLatestTransaction = async (req, res) => {
     );
 
     return res.status(200).json({
-      message: "Succesfully Get Transaction Data",
       status: res.statusCode,
+      error: false,
+      message: "Succesfully Get Transaction Data",
       data: transaction,
     });
   } catch (error) {
     return res
       .status(500)
-      .json({ message: "Internal Error", status: res.statusCode });
+      .json({ status: res.statusCode, error: true, message: "Internal Error" });
   }
 };
 

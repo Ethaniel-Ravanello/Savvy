@@ -5,11 +5,24 @@ const getUserById = async (req, res) => {
   try {
     const response = await Users.findById(req.params.id);
     if (!response) {
-      return res.status(400).json({ message: "User Not Found" });
+      return res.status(400).json({
+        status: res.statusCode,
+        error: true,
+        message: "User Not Found",
+      });
     }
-    return res.status(200).json(response);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfully Update Data",
+      data: response,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Errorss" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -32,11 +45,24 @@ const updateUserById = async (req, res) => {
       }
     );
     if (!response) {
-      return res.status(400).json({ message: "User Not Found" });
+      return res.status(402).json({
+        status: res.statusCode,
+        error: true,
+        message: "User Not Found",
+      });
     }
-    return res.status(200).json(response);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfuly Update User",
+      data: response,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 
@@ -45,12 +71,25 @@ const deleteUserById = async (req, res) => {
     const response = await Users.findByIdAndDelete(req.params.id);
 
     if (!response) {
-      return res.status(400).json({ message: "User Not Found" });
+      return res.status(402).json({
+        status: res.statusCode,
+        error: true,
+        message: "User Not Found",
+      });
     }
 
-    return res.status(200).json(response);
+    return res.status(200).json({
+      status: res.statusCode,
+      error: false,
+      message: "Succesfuly Get User Data",
+      data: response,
+    });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({
+      status: res.statusCode,
+      error: true,
+      message: "Internal Server Error",
+    });
   }
 };
 

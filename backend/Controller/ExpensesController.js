@@ -2,8 +2,9 @@ const Expenses = require("../Models/Expenses");
 
 const getExpenses = async (req, res) => {
   const { userId } = req.params;
+  const sort = { expenseAmount: -1 };
   try {
-    const response = await Expenses.find({ userId: userId });
+    const response = await Expenses.find({ userId: userId }).sort(sort);
 
     return res.status(200).json({
       status: res.statusCode,
@@ -80,7 +81,13 @@ const updateExpense = async (req, res) => {
       data: updateExpense,
     });
   } catch {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({
+        status: res.statusCode,
+        error: true,
+        message: "Internal Server Error",
+      });
   }
 };
 
