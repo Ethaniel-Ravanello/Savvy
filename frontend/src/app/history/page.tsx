@@ -6,8 +6,8 @@ import axios from "axios";
 
 import { HistoryResponse } from "@/interfaces/Latest";
 import formatCurrency from "@/utils/formatCurrency";
-import Layout from "@/app/components/layout";
-import MyModal from "@/components/modal";
+import Layout from "@/app/components/Layout";
+import MyModal from "@/app/components/Modal";
 
 import { BsFillTrashFill } from "react-icons/bs";
 

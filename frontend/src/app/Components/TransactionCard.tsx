@@ -1,7 +1,5 @@
 import React from "react";
 
-import { TbCash, TbCashOff } from "react-icons/tb";
-
 import { IoMdArrowRoundDown, IoMdArrowRoundUp } from "react-icons/io";
 
 interface Data {

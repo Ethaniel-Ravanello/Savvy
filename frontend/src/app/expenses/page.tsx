@@ -10,9 +10,9 @@ import { totalIncome, incomeAmount } from "@/utils/totalingMoney";
 import { NumericFormat } from "react-number-format";
 import formatCurrency from "@/utils/formatCurrency";
 
-import HistoryCard from "@/app/components/historyCard";
-import MyModal from "@/components/modal";
-import Layout from "@/app/components/layout";
+import HistoryCard from "@/app/components/HistoryCard";
+import MyModal from "@/app/components/Modal";
+import Layout from "@/app/components/Layout";
 
 const page = () => {
   const [expenseData, setExpenseData] = useState<ExpenseCard[]>();
@@ -88,7 +88,7 @@ const page = () => {
   const handleDelete = async (transactionId: any) => {
     try {
       await axios.delete(
-        `http://localhost:5000/delete/transaction/Expense/${transactionId}`
+        `${process.env.NEXT_PUBLIC_API}/delete/transaction/Expense/${transactionId}`
       );
       getData();
     } catch (error) {

@@ -10,9 +10,9 @@ import { formatDate, converMongoDbDate } from "@/utils/formatDate";
 import { IncomeCard } from "@/interfaces/Income";
 import formatCurrency from "@/utils/formatCurrency";
 
-import Layout from "@/components/layout";
-import HistoryCard from "@/components/historyCard";
-import MyModal from "@/components/modal";
+import Layout from "@/app/components/Layout";
+import HistoryCard from "@/app/components/HistoryCard";
+import MyModal from "@/app/components/Modal";
 
 const page = () => {
   const [incomeData, setIncomeData] = useState<IncomeCard[]>();

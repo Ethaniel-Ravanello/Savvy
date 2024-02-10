@@ -4,8 +4,8 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import axios from "axios";
 
-import Layout from "@/components/layout";
-import MyModal from "@/components/modal";
+import Layout from "@/app/components/Layout";
+import MyModal from "@/app/components/Modal";
 
 const page = () => {
   const [myModal, setMyModal] = useState({
@@ -93,7 +93,7 @@ const page = () => {
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [user]);
 
   return (
     <Layout>

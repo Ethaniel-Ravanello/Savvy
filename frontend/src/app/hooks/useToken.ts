@@ -28,7 +28,7 @@ export const useExpiredToken = () => {
     } else {
       setIsTokenExpired(true);
     }
-  }, [token]);
+  }, [token, jwtExpirationDate]);
 
   return isTokenExpired;
 };

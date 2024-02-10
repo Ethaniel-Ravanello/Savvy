@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
-import Sidebar from "./sidebar";
-import BottomBar from "./bottomBar";
+import Sidebar from "./Sidebar";
+import BottomBar from "./BottomBar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

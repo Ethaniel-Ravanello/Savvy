@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 
-import MyModal from "../components/modal";
+import MyModal from "../components/Modal";
 
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 

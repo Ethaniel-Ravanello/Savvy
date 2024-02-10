@@ -8,10 +8,10 @@ import axios from "axios";
 import { IncomeResponse, TotalIncomeResponse } from "@/interfaces/Income";
 import { ExpenseResponse, TotalExpenseResponse } from "@/interfaces/Expense";
 import { TransactionResponse } from "@/interfaces/Latest";
-import TransactionCard from "@/components/transactionCard";
+import TransactionCard from "@/app/components/TransactionCard";
 import formatCurrency from "@/utils/formatCurrency";
-import Layout from "@/components/layout";
-import Charts from "@/components/chart";
+import Layout from "@/app/components/Layout";
+import Charts from "@/app/components/Chart";
 
 import {
   IoMdArrowRoundDown,
@@ -19,8 +19,8 @@ import {
   IoMdArrowRoundForward,
 } from "react-icons/io";
 import { BiDollarCircle } from "react-icons/bi";
-import MyModal from "@/components/modal";
-import Spinner from "@/components/spinner";
+import MyModal from "@/app/components/Modal";
+import Spinner from "@/app/components/Spinner";
 
 const page = () => {
   const [latestTransaction, setLatestTransaction] =
