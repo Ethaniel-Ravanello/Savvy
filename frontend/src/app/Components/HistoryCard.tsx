@@ -26,7 +26,7 @@ const HistoryCard = ({
             <div className="flex mb-2">
               <div
                 className={`w-2 h-2 rounded-full ${
-                  type === "Income" ? "bg-Success" : "bg-red-600"
+                  type === "Income" ? "bg-success-secondary" : "bg-red-600"
                 } mt-2 mx-2`}
               ></div>
               <p>{name}</p>

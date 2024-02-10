@@ -3,6 +3,10 @@ interface TransactionResponse {
   type: string;
   incomeAmount: number;
   expenseAmount: number;
+  incomeName: string;
+  incomeDescription: string;
+  expenseName: string;
+  expenseDescription: string;
 }
 
 interface HistoryResponse {

@@ -20,7 +20,7 @@ export const useExpiredToken = () => {
 
   useEffect(() => {
     if (token) {
-      if (jwtExpirationDate < new Date()) {
+      if (jwtExpirationDate < new Date() || !token || token === "") {
         setIsTokenExpired(true);
       } else {
         setIsTokenExpired(false);

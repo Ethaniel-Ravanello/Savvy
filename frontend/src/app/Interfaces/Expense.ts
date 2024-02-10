@@ -2,6 +2,8 @@ interface ExpenseResponse {
   id: number;
   type: string;
   expenseAmount: number;
+  expenseName: string;
+  expenseDescription: string;
 }
 
 interface TotalExpenseResponse {

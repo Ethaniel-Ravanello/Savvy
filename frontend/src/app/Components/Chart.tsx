@@ -17,7 +17,6 @@ interface Props {
 const Charts = ({ income, expense, formatCurrency }: Props) => {
   const balance = income - expense;
   Chart.register(ArcElement);
-
   const config = {
     data: {
       datasets: [
@@ -38,13 +37,14 @@ const Charts = ({ income, expense, formatCurrency }: Props) => {
       cutout: 115,
     },
   };
+
   return (
     <div className="flex justify-content relative">
       <div>
         <Doughnut {...config}></Doughnut>
         <div className="w-full mx-auto text-center absolute top-1/3">
-          <p className="text-white text-2xl">Total Balance</p>
-          <span className="text-[#35B3EC] text-xl">
+          <p className="text-white text-2xl font-bold">Balance</p>
+          <span className="text-[#35B3EC] text-xl font-semibold">
             {formatCurrency(balance)}
           </span>
         </div>

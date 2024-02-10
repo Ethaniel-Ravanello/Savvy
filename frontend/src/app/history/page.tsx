@@ -2,26 +2,33 @@
 
 import React, { useState, useEffect } from "react";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 
 import { HistoryResponse } from "@/interfaces/Latest";
-import Layout from "@/app/components/layout";
 import formatCurrency from "@/utils/formatCurrency";
+import Layout from "@/app/components/layout";
+import MyModal from "@/components/modal";
 
 import { BsFillTrashFill } from "react-icons/bs";
 
 const page = () => {
   const [transactionData, setTransactionData] = useState<HistoryResponse[]>();
+  const [myModal, setMyModal] = useState({
+    isOpen: false,
+    header: "",
+    body: "",
+    button: "",
+    isRedirect: false,
+    href: "",
+  });
 
   const userId = useUserId();
   const isExpired = useExpiredToken();
-  const navigate = useRouter();
 
   const getTransaction = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/latestTransaction/${userId}`
+        `${process.env.NEXT_PUBLIC_API}/latestTransaction/${userId}`
       );
       setTransactionData(res.data.data);
       console.log(res.data.data);
@@ -32,7 +39,14 @@ const page = () => {
 
   useEffect(() => {
     if (isExpired) {
-      navigate.push("/login");
+      setMyModal({
+        isOpen: true,
+        header: "Session Expired",
+        body: "Your Session Has Expired Please Login Again.",
+        button: "Close",
+        isRedirect: true,
+        href: "/login",
+      });
       localStorage.clear();
     }
   });
@@ -52,12 +66,13 @@ const page = () => {
   };
   return (
     <Layout>
-      <div className="text-white h-[calc(100vh-30px)] w-full lg:bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
-        <h1 className="text-2xl mb-5 mt-5 lg:mt-0">Transaction History</h1>
+      <MyModal myModal={myModal} setMyModal={setMyModal} />
+      <div className="text-white h-[calc(100vh-30px)] w-full lg:bg-Highlight rounded-[30px] px-10 py-3 lg:ml-5 overflow-y-hidden">
+        <h1 className="text-2xl mb-5 mt-3.5">Transaction History</h1>
 
-        <div className="overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg max-h-[450px] scrollbar-thin scrollbar-thumb-white">
+        <div className="overflow-y-scroll shadow-md sm:rounded-lg h-[85vh] scrollbar-thin scrollbar-thumb-white">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#222222] dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#222222] dark:text-gray-400 sticky top-0 z-20">
               <tr>
                 <th scope="col" className="p-4">
                   <div className="flex items-center">
@@ -91,12 +106,12 @@ const page = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {transactionData?.map((data: any) => {
+            <tbody className="rounded-xl">
+              {transactionData?.slice(0, 8).map((data: any) => {
                 return (
                   <tr
                     key={data._id}
-                    className="bg-white border-b dark:bg-[#383838] dark:border-gray-700 hover:bg-[#1b1b1b] dark:hover:bg-[#1b1b1b]"
+                    className="bg-white border-b dark:bg-[#383838] dark:border-gray-700 hover:bg-[#1b1b1b] dark:hover:bg-[#1b1b1b] overflow-y-hidden rounded-xl"
                   >
                     <td className="w-4 p-4">
                       <div className="flex items-center">

@@ -2,6 +2,8 @@ interface IncomeResponse {
   id: number;
   type: string;
   incomeAmount: number;
+  incomeDescription: string;
+  incomeName: string;
 }
 
 interface TotalIncomeResponse {

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
@@ -12,6 +12,8 @@ import { TbPigMoney } from "react-icons/tb";
 import { FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = () => {
+  const [userName, setUserName] = useState("");
+
   const navigate = useRouter();
   const pathname = usePathname();
 
@@ -21,15 +23,6 @@ const Sidebar = () => {
   };
   return (
     <div className="bg-Highlight w-[250px] h-[calc(100vh-30px)] text-white rounded-[40px] px-4 py-5 overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-400">
-      <div className="mx-auto w-fit pb-5 pt-2">
-        {/* <CgProfile className="mx-auto w-20 h-20 mb-8 mt-3" /> */}
-        <h2 className="text-2xl font-semibold">Hello, Ethan</h2>
-      </div>
-
-      <div className="px-10">
-        <div className="w-full h-[2px] bg-[#2f2f2f]"></div>
-      </div>
-
       <div className="mt-5">
         <div>
           <h2 className="text-white font-semibold text-2xl mb-2">Home</h2>
@@ -37,12 +30,14 @@ const Sidebar = () => {
           <ul className="text-lg">
             <Link
               href="/"
-              className={`flex w-full  rounded-lg ${
-                pathname === "/" ? "bg-Secondary" : "hover:bg-[#222222]"
-              }`}
+              className="flex w-full  rounded-lg hover:bg-[#222222]"
             >
               <li className="flex p-3">
-                <div className="bg-[#222222] rounded-full">
+                <div
+                  className={`rounded-full ${
+                    pathname === "/" ? "bg-Secondary" : "bg-[#222222]"
+                  }`}
+                >
                   <AiFillHome className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Dashboard</p>
@@ -51,12 +46,14 @@ const Sidebar = () => {
 
             <Link
               href="/setting"
-              className={`flex  rounded-lg ${
-                pathname === "/setting" ? "bg-Secondary" : "hover:bg-[#222222]"
-              }`}
+              className="flex w-full  rounded-lg hover:bg-[#222222]"
             >
               <li className="flex p-3 ">
-                <div className="bg-[#222222] rounded-full">
+                <div
+                  className={`rounded-full ${
+                    pathname === "/setting" ? "bg-Secondary" : "bg-[#222222]"
+                  }`}
+                >
                   <BsFillPersonFill className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Settings</p>
@@ -73,12 +70,14 @@ const Sidebar = () => {
           <ul className="text-lg">
             <Link
               href="/history"
-              className={`flex  rounded-lg ${
-                pathname === "/history" ? "bg-Secondary" : "hover:bg-[#222222]"
-              }`}
+              className="flex w-full  rounded-lg hover:bg-[#222222]"
             >
               <li className="flex p-3">
-                <div className="bg-[#222222] rounded-full">
+                <div
+                  className={`rounded-full ${
+                    pathname === "/history" ? "bg-Secondary" : "bg-[#222222]"
+                  }`}
+                >
                   <TbPigMoney className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">History</p>
@@ -87,12 +86,14 @@ const Sidebar = () => {
 
             <Link
               href="/incomes"
-              className={`flex rounded-lg  ${
-                pathname === "/incomes" ? "bg-Secondary" : "hover:bg-[#222222]"
-              }`}
+              className="flex w-full  rounded-lg hover:bg-[#222222]"
             >
               <li className="flex p-3">
-                <div className="bg-[#222222] rounded-full">
+                <div
+                  className={`rounded-full ${
+                    pathname === "/income" ? "bg-Secondary" : "bg-[#222222]"
+                  }`}
+                >
                   <MdAttachMoney className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Incomes</p>
@@ -101,12 +102,14 @@ const Sidebar = () => {
 
             <Link
               href="/expenses"
-              className={`flex rounded-lg  ${
-                pathname === "/expenses" ? "bg-Secondary" : "hover:bg-[#222222]"
-              }`}
+              className="flex w-full  rounded-lg hover:bg-[#222222]"
             >
               <li className="flex p-3">
-                <div className="bg-[#222222] rounded-full">
+                <div
+                  className={`rounded-full ${
+                    pathname === "/expense" ? "bg-Secondary" : "bg-[#222222]"
+                  }`}
+                >
                   <MdMoneyOff className="m-2.5" />
                 </div>
                 <p className="pt-1.5 ml-3">Expense</p>

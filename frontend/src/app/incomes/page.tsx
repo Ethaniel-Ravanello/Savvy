@@ -3,7 +3,6 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import { NumericFormat } from "react-number-format";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 
 import { incomeAmount, totalIncome } from "@/utils/totalingMoney";
@@ -11,8 +10,9 @@ import { formatDate, converMongoDbDate } from "@/utils/formatDate";
 import { IncomeCard } from "@/interfaces/Income";
 import formatCurrency from "@/utils/formatCurrency";
 
-import Layout from "@/app/components/layout";
-import HistoryCard from "@/app/components/historyCard";
+import Layout from "@/components/layout";
+import HistoryCard from "@/components/historyCard";
+import MyModal from "@/components/modal";
 
 const page = () => {
   const [incomeData, setIncomeData] = useState<IncomeCard[]>();
@@ -24,10 +24,17 @@ const page = () => {
     incomeDate: "",
     incomeAmount: "",
   });
+  const [myModal, setMyModal] = useState({
+    isOpen: false,
+    header: "",
+    body: "",
+    button: "",
+    isRedirect: false,
+    href: "",
+  });
 
   const userId = useUserId();
   const income: any = incomeAmount(incomeData);
-  const navigate = useRouter();
   const isExpired = useExpiredToken();
 
   const handleChange = (
@@ -43,7 +50,9 @@ const page = () => {
 
   const getIncome = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/income/${userId}`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/income/${userId}`
+      );
       setIncomeData(res.data.data);
     } catch (error) {
       console.log(error);
@@ -53,7 +62,7 @@ const page = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/income`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API}/income`, {
         userId: userId,
         type: "Income",
         incomeName: createIncome.incomeName,
@@ -77,7 +86,7 @@ const page = () => {
   const handleDelete = async (transactionId: any) => {
     try {
       await axios.delete(
-        `http://localhost:5000/delete/transaction/Income/${transactionId}`
+        `${process.env.NEXT_PUBLIC_API}/delete/transaction/Income/${transactionId}`
       );
       getIncome();
     } catch (error) {
@@ -87,7 +96,14 @@ const page = () => {
 
   useEffect(() => {
     if (isExpired) {
-      navigate.push("/login");
+      setMyModal({
+        isOpen: true,
+        header: "Session Expired",
+        body: "Your Session Has Expired Please Login Again.",
+        button: "Close",
+        isRedirect: true,
+        href: "/login",
+      });
       localStorage.clear();
     }
   });
@@ -97,7 +113,8 @@ const page = () => {
   }, []);
   return (
     <Layout>
-      <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
+      <MyModal myModal={myModal} setMyModal={setMyModal} />
+      <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto lg:bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
         <h1 className="text-2xl mb-5 font-semibold">Incomes</h1>
         <div className="w-full bg-[#222222] mb-5 rounded-lg py-3">
           <p className="text-center text-lg">
@@ -106,7 +123,7 @@ const page = () => {
         </div>
         <div className="w-full bg-[#222222] "></div>
         <div className="flex">
-          <div className="w-[30%]">
+          <div className="w-[100%] lg:w-[30%]">
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
                 <input
@@ -151,16 +168,18 @@ const page = () => {
                 ></textarea>
               </div>
 
-              <button
-                type="submit"
-                className="text-white bg-primary active:bg-primary-click hover:bg-primary-hover focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              >
-                Add Income
-              </button>
+              <div className="w-full lg:w-fit mx-auto">
+                <button
+                  type="submit"
+                  className="text-white bg-primary active:bg-primary-click hover:bg-primary-hover focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full"
+                >
+                  Add Income
+                </button>
+              </div>
             </form>
           </div>
 
-          <div className="w-[70%] h-[65vh] overflow-y-scroll overflow-x-hidden ml-5 scrollbar-thin scrollbar-thumb-primary-400">
+          <div className="w-[70%] h-[65vh] overflow-y-scroll overflow-x-hidden ml-5 scrollbar-thin scrollbar-thumb-primary-400 hidden lg:block">
             {incomeData?.map((data) => (
               <HistoryCard
                 key={data._id}
