@@ -12,6 +12,8 @@ import TransactionCard from "@/components/TransactionCard";
 import { formatCurrency } from "@/hooks/useCurrency";
 import Layout from "@/components/Layout";
 import Charts from "@/components/Chart";
+import MyModal from "@/components/Modal";
+import Spinner from "@/components/Spinner";
 
 import {
   IoMdArrowRoundDown,
@@ -19,8 +21,6 @@ import {
   IoMdArrowRoundForward,
 } from "react-icons/io";
 import { BiDollarCircle } from "react-icons/bi";
-import MyModal from "@/app/components/Modal";
-import Spinner from "@/app/components/Spinner";
 
 const page = () => {
   const [latestTransaction, setLatestTransaction] =

@@ -5,14 +5,14 @@ import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import { NumericFormat } from "react-number-format";
 import axios from "axios";
 
-import { incomeAmount, totalIncome } from "@/app/hooks/useMoney";
-import { formatDate, converMongoDbDate } from "@/app/hooks/useDate";
+import { incomeAmount, totalIncome } from "@/hooks/useMoney";
+import { formatDate, converMongoDbDate } from "@/hooks/useDate";
 import { IncomeCard } from "@/interfaces/Income";
-import { formatCurrency } from "@/app/hooks/useCurrency";
+import { formatCurrency } from "@/hooks/useCurrency";
 
-import Layout from "@/app/components/Layout";
-import HistoryCard from "@/app/components/HistoryCard";
-import MyModal from "@/app/components/Modal";
+import Layout from "@/components/Layout";
+import HistoryCard from "@/components/HistoryCard";
+import MyModal from "@/components/Modal";
 
 const page = () => {
   const [incomeData, setIncomeData] = useState<IncomeCard[]>();

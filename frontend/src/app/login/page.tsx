@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 
-import Spinner from "@/app/components/Spinner";
+import Spinner from "@/components/Spinner";
 
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
 

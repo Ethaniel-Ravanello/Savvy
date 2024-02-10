@@ -4,8 +4,8 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import axios from "axios";
 
-import Layout from "@/app/components/Layout";
-import MyModal from "@/app/components/Modal";
+import Layout from "@/components/Layout";
+import MyModal from "@/components/Modal";
 
 const page = () => {
   const [myModal, setMyModal] = useState({

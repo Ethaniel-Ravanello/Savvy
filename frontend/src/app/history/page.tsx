@@ -5,9 +5,9 @@ import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import axios from "axios";
 
 import { HistoryResponse } from "@/interfaces/Latest";
-import formatCurrency from "@/app/hooks/useCurrency";
-import Layout from "@/app/components/Layout";
-import MyModal from "@/app/components/Modal";
+import { formatCurrency } from "@/hooks/useCurrency";
+import Layout from "@/components/Layout";
+import MyModal from "@/components/Modal";
 
 import { BsFillTrashFill } from "react-icons/bs";
 
