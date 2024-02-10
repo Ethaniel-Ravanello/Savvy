@@ -14,7 +14,7 @@ import HistoryCard from "@/components/HistoryCard";
 import MyModal from "@/components/Modal";
 import Layout from "@/components/Layout";
 
-const page = () => {
+const Page = () => {
   const [expenseData, setExpenseData] = useState<ExpenseCard[]>();
   const [createExpense, setCreateExpense] = useState({
     userId: "",
@@ -204,4 +204,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -7,7 +7,7 @@ import axios from "axios";
 import Layout from "@/components/Layout";
 import MyModal from "@/components/Modal";
 
-const page = () => {
+const Page = () => {
   const [myModal, setMyModal] = useState({
     isOpen: false,
     header: "",
@@ -217,4 +217,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

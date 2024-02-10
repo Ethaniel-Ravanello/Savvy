@@ -14,6 +14,7 @@ export const useExpiredToken = () => {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("Token") : "";
   const expired = parseJwt(token);
+
   const jwtExpirationDate = new Date(expired.exp * 1000);
 
   const [isTokenExpired, setIsTokenExpired] = useState(false);
@@ -28,7 +29,7 @@ export const useExpiredToken = () => {
     } else {
       setIsTokenExpired(true);
     }
-  }, [token, jwtExpirationDate]);
+  }, [token]);
 
   return isTokenExpired;
 };

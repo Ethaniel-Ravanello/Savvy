@@ -22,7 +22,7 @@ import {
 } from "react-icons/io";
 import { BiDollarCircle } from "react-icons/bi";
 
-const page = () => {
+const Page = () => {
   const [latestTransaction, setLatestTransaction] =
     useState<TransactionResponse[]>();
   const [income, setIncome] = useState<IncomeResponse[]>();
@@ -277,4 +277,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

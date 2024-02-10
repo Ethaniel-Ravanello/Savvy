@@ -11,7 +11,7 @@ import MyModal from "@/components/Modal";
 
 import { BsFillTrashFill } from "react-icons/bs";
 
-const page = () => {
+const Page = () => {
   const [transactionData, setTransactionData] = useState<HistoryResponse[]>();
   const [myModal, setMyModal] = useState({
     isOpen: false,
@@ -173,4 +173,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
