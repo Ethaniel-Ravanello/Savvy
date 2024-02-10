@@ -1,7 +1,6 @@
 import { useRouter } from "next/navigation";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { isRedirectError } from "next/dist/client/components/redirect";
 
 interface ModalStruct {
   isOpen: boolean;
@@ -12,13 +11,13 @@ interface ModalStruct {
   href: string;
 }
 
-export default function MyModal({
+const MyModal = ({
   myModal,
   setMyModal,
 }: {
   myModal: ModalStruct;
   setMyModal: React.Dispatch<React.SetStateAction<ModalStruct>>;
-}) {
+}) => {
   const router = useRouter();
   return (
     <>
@@ -93,4 +92,6 @@ export default function MyModal({
       </Transition>
     </>
   );
-}
+};
+
+export default MyModal;
