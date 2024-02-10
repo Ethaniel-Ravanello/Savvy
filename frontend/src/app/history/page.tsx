@@ -5,7 +5,7 @@ import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import axios from "axios";
 
 import { HistoryResponse } from "@/interfaces/Latest";
-import formatCurrency from "@/utils/formatCurrency";
+import formatCurrency from "@/app/hooks/useCurrency";
 import Layout from "@/app/components/Layout";
 import MyModal from "@/app/components/Modal";
 

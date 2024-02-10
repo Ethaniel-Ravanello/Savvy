@@ -8,10 +8,10 @@ import axios from "axios";
 import { IncomeResponse, TotalIncomeResponse } from "@/interfaces/Income";
 import { ExpenseResponse, TotalExpenseResponse } from "@/interfaces/Expense";
 import { TransactionResponse } from "@/interfaces/Latest";
-import TransactionCard from "@/app/components/TransactionCard";
-import formatCurrency from "@/utils/formatCurrency";
-import Layout from "@/app/components/Layout";
-import Charts from "@/app/components/Chart";
+import TransactionCard from "@/components/TransactionCard";
+import { formatCurrency } from "@/hooks/useCurrency";
+import Layout from "@/components/Layout";
+import Charts from "@/components/Chart";
 
 import {
   IoMdArrowRoundDown,

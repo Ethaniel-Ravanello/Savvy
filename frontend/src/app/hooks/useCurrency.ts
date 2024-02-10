@@ -1,4 +1,4 @@
-const formatCurrency = (amount: any) => {
+export const formatCurrency = (amount: any) => {
   return amount?.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -6,5 +6,3 @@ const formatCurrency = (amount: any) => {
     maximumFractionDigits: 0,
   });
 };
-
-export default formatCurrency;
