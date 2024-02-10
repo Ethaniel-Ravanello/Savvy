@@ -83,7 +83,7 @@ const Page = () => {
 
   useEffect(() => {
     getAllData();
-  }, []);
+  }, [userId]);
 
   return (
     <Layout>

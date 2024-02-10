@@ -29,7 +29,7 @@ export const useExpiredToken = () => {
     } else {
       setIsTokenExpired(true);
     }
-  }, [token]);
+  });
 
   return isTokenExpired;
 };

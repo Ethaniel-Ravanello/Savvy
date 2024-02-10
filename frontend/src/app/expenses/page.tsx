@@ -55,7 +55,6 @@ const Page = () => {
         `${process.env.NEXT_PUBLIC_API}/expense/${userId}`
       );
       setExpenseData(res.data.data);
-      console.log(res.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -108,11 +107,11 @@ const Page = () => {
       });
       localStorage.clear();
     }
-  });
-  console.log(createExpense);
+  }, [isExpired]);
+
   useEffect(() => {
     getData();
-  }, []);
+  });
   return (
     <Layout>
       <MyModal myModal={myModal} setMyModal={setMyModal} />

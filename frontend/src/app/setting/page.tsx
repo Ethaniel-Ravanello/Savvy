@@ -89,11 +89,11 @@ const Page = () => {
       });
       localStorage.clear();
     }
-  });
+  }, [isExpired]);
 
   useEffect(() => {
     getUserData();
-  }, [user]);
+  });
 
   return (
     <Layout>

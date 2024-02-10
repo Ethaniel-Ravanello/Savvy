@@ -106,11 +106,11 @@ const Page = () => {
       });
       localStorage.clear();
     }
-  });
+  }, [isExpired]);
 
   useEffect(() => {
     getIncome();
-  }, []);
+  });
   return (
     <Layout>
       <MyModal myModal={myModal} setMyModal={setMyModal} />
