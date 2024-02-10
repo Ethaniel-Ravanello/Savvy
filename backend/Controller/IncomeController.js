@@ -3,7 +3,9 @@ const Income = require("../Models/Income.js");
 const getIncome = async (req, res) => {
   const { userId } = req.params;
   try {
-    const response = await Income.find({ userId: userId });
+    const response = await Income.find({ userId: userId }).sort({
+      createdAt: -1,
+    });
 
     return res.status(200).json({
       status: res.statusCode,
@@ -107,7 +109,6 @@ const getTotalIncome = async (req, res) => {
   const { userId } = req.params;
   try {
     const response = await Income.find({ userId: userId });
-    console.log(response);
     const totalIncome = response.reduce(
       (total, income) => total + income.incomeAmount,
       0

@@ -12,8 +12,8 @@ const getLatestTransaction = async (req, res) => {
 
     transaction.sort(
       (a, b) =>
-        new Date(b.incomeDate || b.expenseDate) -
-        new Date(a.incomeDate || a.expenseDate)
+        new Date(b.createdAt || b.createdAt) -
+        new Date(a.createdAt || a.createdAt)
     );
 
     return res.status(200).json({
