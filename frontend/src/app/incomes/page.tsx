@@ -8,7 +8,7 @@ import axios from "axios";
 import { incomeAmount, totalIncome } from "@/app/hooks/useMoney";
 import { formatDate, converMongoDbDate } from "@/app/hooks/useDate";
 import { IncomeCard } from "@/interfaces/Income";
-import formatCurrency from "@/app/hooks/useCurrency";
+import { formatCurrency } from "@/app/hooks/useCurrency";
 
 import Layout from "@/app/components/Layout";
 import HistoryCard from "@/app/components/HistoryCard";
