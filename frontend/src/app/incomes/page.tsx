@@ -3,6 +3,7 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import { NumericFormat } from "react-number-format";
+import dynamic from "next/dynamic";
 import axios from "axios";
 
 import { incomeAmount, totalIncome } from "@/hooks/useMoney";
@@ -12,7 +13,8 @@ import { formatCurrency } from "@/hooks/useCurrency";
 
 import Layout from "@/components/Layout";
 import HistoryCard from "@/components/HistoryCard";
-import MyModal from "@/components/Modal";
+
+const MyModal = dynamic(() => import("@/components/Modal"));
 
 const Page = () => {
   const [incomeData, setIncomeData] = useState<IncomeCard[]>();

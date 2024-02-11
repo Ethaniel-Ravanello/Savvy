@@ -1,17 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import axios from "axios";
 
-import MyModal from "@/components/Modal";
+const MyModal = dynamic(() => import("@/components/Modal"));
 
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
-
-interface ApiResponse {
-  status: number;
-  message: string;
-}
 
 const RegisterPage = () => {
   const [showPass, setShowPass] = useState(false);
@@ -29,8 +25,6 @@ const RegisterPage = () => {
     isRedirect: false,
     href: "",
   });
-
-  const navigate = useRouter();
 
   const newUser = async () => {
     try {

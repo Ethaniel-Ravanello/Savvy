@@ -1,7 +1,8 @@
+import dynamic from "next/dynamic";
 import React from "react";
 
-import Sidebar from "./Sidebar";
-import BottomBar from "./BottomBar";
+const Sidebar = dynamic(() => import("./Sidebar"));
+const BottomBar = dynamic(() => import("./BottomBar"));
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

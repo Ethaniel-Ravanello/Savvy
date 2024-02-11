@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
+import dynamic from "next/dynamic";
 import axios from "axios";
 
 import { HistoryResponse } from "@/interfaces/Latest";
 import { formatCurrency } from "@/hooks/useCurrency";
 import Layout from "@/components/Layout";
-import MyModal from "@/components/Modal";
+
+const MyModal = dynamic(() => import("@/components/Modal"));
 
 import { BsFillTrashFill } from "react-icons/bs";
 

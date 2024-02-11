@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useExpiredToken, useUserId } from "./hooks/useToken";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import axios from "axios";
 
@@ -12,8 +13,9 @@ import TransactionCard from "@/components/TransactionCard";
 import { formatCurrency } from "@/hooks/useCurrency";
 import Layout from "@/components/Layout";
 import Charts from "@/components/Chart";
-import MyModal from "@/components/Modal";
 import Spinner from "@/components/Spinner";
+
+const MyModal = dynamic(() => import("@/components/Modal"));
 
 import {
   IoMdArrowRoundDown,

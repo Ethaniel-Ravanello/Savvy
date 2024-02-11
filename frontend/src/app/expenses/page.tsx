@@ -3,6 +3,7 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import { ExpenseCard } from "@/interfaces/Expense";
+import dynamic from "next/dynamic";
 import axios from "axios";
 
 import { formatDate, converMongoDbDate } from "@/hooks/useDate";
@@ -11,8 +12,9 @@ import { NumericFormat } from "react-number-format";
 import { formatCurrency } from "@/hooks/useCurrency";
 
 import HistoryCard from "@/components/HistoryCard";
-import MyModal from "@/components/Modal";
 import Layout from "@/components/Layout";
+
+const MyModal = dynamic(() => import("@/components/Modal"));
 
 const Page = () => {
   const [expenseData, setExpenseData] = useState<ExpenseCard[]>();

@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useEffect, ChangeEvent } from "react";
+import dynamic from "next/dynamic";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import axios from "axios";
 
 import Layout from "@/components/Layout";
-import MyModal from "@/components/Modal";
+
+const MyModal = dynamic(() => import("@/components/Modal"));
 
 const Page = () => {
   const [myModal, setMyModal] = useState({
