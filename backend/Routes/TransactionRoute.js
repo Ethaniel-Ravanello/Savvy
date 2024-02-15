@@ -5,7 +5,7 @@ const LatestTransactionController = require("../Controller/TransactionController
 const router = express.Router();
 
 router.get(
-  "/latestTransaction/:userId",
+  "/latestTransaction",
   LatestTransactionController.getLatestTransaction
 );
 

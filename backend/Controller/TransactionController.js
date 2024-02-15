@@ -2,11 +2,16 @@ const Income = require("../Models/Income.js");
 const Expense = require("../Models/Expenses.js");
 
 const getLatestTransaction = async (req, res) => {
-  const { userId } = req.params;
-
+  const { userId, page, limit } = req.query;
+  console.log(req.query);
   try {
     const income = await Income.find({ userId: userId });
     const expense = await Expense.find({ userId: userId });
+
+    const incomeCountPromise = await Income.countDocuments({ userId });
+    const expenseCountPromise = await Expense.countDocuments({ userId });
+
+    const totalCount = incomeCountPromise + expenseCountPromise;
 
     const transaction = income.concat(expense);
 
@@ -16,11 +21,18 @@ const getLatestTransaction = async (req, res) => {
         new Date(a.createdAt || a.createdAt)
     );
 
+    const sliceTransaction = transaction.slice(
+      (page - 1) * parseInt(limit),
+      parseInt(limit) * parseInt(page)
+    );
+    console.log((page - 1) * parseInt(limit) + 1);
     return res.status(200).json({
       status: res.statusCode,
       error: false,
       message: "Succesfully Get Transaction Data",
-      data: transaction,
+      data: sliceTransaction,
+      totalData: totalCount,
+      totalPage: Math.ceil(totalCount / limit),
     });
   } catch (error) {
     return res
