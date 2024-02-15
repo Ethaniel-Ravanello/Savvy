@@ -30,7 +30,7 @@ const Page = () => {
   const getTransaction = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/latestTransaction?userId=${userId}&page=1&limit=7`
+        `${process.env.NEXT_PUBLIC_API}/latestTransaction?userId=${userId}&page=1&limit=7`
       );
       setTransactionData(res.data.data);
       console.log(res.data.data);
@@ -74,18 +74,6 @@ const Page = () => {
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#222222] dark:text-gray-400 sticky top-0 z-20">
               <tr>
-                <th scope="col" className="p-4">
-                  <div className="flex items-center">
-                    <input
-                      id="checkbox-all-search"
-                      type="checkbox"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label htmlFor="checkbox-all-search" className="sr-only">
-                      checkbox
-                    </label>
-                  </div>
-                </th>
                 <th scope="col" className="px-6 py-3">
                   Transaction
                 </th>
@@ -111,23 +99,8 @@ const Page = () => {
                 return (
                   <tr
                     key={data._id}
-                    className="bg-white border-b dark:bg-[#383838] dark:border-gray-700 hover:bg-[#1b1b1b] dark:hover:bg-[#1b1b1b] overflow-y-hidden rounded-xl"
+                    className="bg-white dark:bg-[#383838] dark:border-gray-700 hover:bg-[#1b1b1b] dark:hover:bg-[#1b1b1b] overflow-y-hidden rounded-xl"
                   >
-                    <td className="w-4 p-4">
-                      <div className="flex items-center">
-                        <input
-                          id="checkbox-table-search-1"
-                          type="checkbox"
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                        />
-                        <label
-                          htmlFor="checkbox-table-search-1"
-                          className="sr-only"
-                        >
-                          checkbox
-                        </label>
-                      </div>
-                    </td>
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"

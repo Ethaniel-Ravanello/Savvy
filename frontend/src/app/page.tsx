@@ -98,8 +98,8 @@ const Page = () => {
           <div className="mx-auto align-middle mb-2 hidden xl:flex items-center lg:ml-7 mt-10">
             {!isLoading ? (
               <Charts
-                income={totalIncome?.data ?? 0}
-                expense={totalExpense?.data ?? 0}
+                income={totalIncome ?? 0}
+                expense={totalExpense ?? 0}
                 formatCurrency={formatCurrency}
               />
             ) : (

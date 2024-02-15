@@ -94,7 +94,7 @@ const createIncome = async (req, res) => {
 
 const deleteIncomeById = async (req, res) => {
   try {
-    await Income.deleteOne({ _id: req.params.id });
+    await Income.deleteMany({ _id: { $in: req.body.ids } });
     return res.status(200).json({
       status: res.statusCode,
       error: false,

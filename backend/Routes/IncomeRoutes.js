@@ -10,6 +10,6 @@ router.get("/total/income/:userId", IncomeController.getTotalIncome);
 
 router.post("/income", IncomeController.createIncome);
 router.put("/income/:id", IncomeController.updateIncomeById);
-router.delete("/income/:id", IncomeController.deleteIncomeById);
+router.delete("/income", IncomeController.deleteIncomeById);
 
 module.exports = router;

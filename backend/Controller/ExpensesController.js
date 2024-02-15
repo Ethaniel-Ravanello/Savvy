@@ -91,10 +91,8 @@ const updateExpense = async (req, res) => {
 };
 
 const deleteExpense = async (req, res) => {
-  const { userId } = req.body;
-
   try {
-    await Expenses.deleteOne({ _id: req.params.id, userId: userId });
+    await Expenses.deleteMany({ _id: { $in: req.body.ids } });
     return res.status(200).json({
       status: res.statusCode,
       error: false,

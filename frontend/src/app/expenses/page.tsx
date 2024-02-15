@@ -13,11 +13,14 @@ import { formatCurrency } from "@/hooks/useCurrency";
 
 import HistoryCard from "@/components/HistoryCard";
 import Layout from "@/components/Layout";
+import Spinner from "../components/Spinner";
 
 const MyModal = dynamic(() => import("@/components/Modal"));
 
 const Page = () => {
   const [expenseData, setExpenseData] = useState<ExpenseCard[]>();
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [createExpense, setCreateExpense] = useState({
     userId: "",
     type: "",
@@ -52,17 +55,21 @@ const Page = () => {
   };
 
   const getData = async () => {
+    setIsLoading(true);
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API}/expense/${userId}`
       );
       setExpenseData(res.data.data);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
 
   const handleSubmit = async (e: any) => {
+    setIsLoadingCreate(true);
     e.preventDefault();
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API}/expense`, {
@@ -82,15 +89,19 @@ const Page = () => {
         expenseDate: "",
         expenseAmount: "",
       });
+      setIsLoadingCreate(false);
     } catch (error) {
+      setIsLoadingCreate(false);
       console.log(error);
     }
   };
   const handleDelete = async (transactionId: any) => {
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API}/delete/transaction/Expense/${transactionId}`
-      );
+      await axios.delete(`${process.env.NEXT_PUBLIC_API}/expense`, {
+        data: {
+          ids: transactionId,
+        },
+      });
       getData();
     } catch (error) {
       console.log(error);
@@ -175,27 +186,45 @@ const Page = () => {
               <div className="w-full lg:w-fit">
                 <button
                   type="submit"
-                  className="text-white bg-primary active:bg-primary-click hover:bg-primary-hover focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full"
+                  className="flex text-white bg-primary active:bg-primary-click hover:bg-primary-hover focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full"
                 >
-                  Add Expense
+                  <p>Add Expense</p>
+                  {isLoadingCreate ? (
+                    <Spinner className="text-neutral-100 w-5 h-5 ml-5" />
+                  ) : null}
                 </button>
               </div>
             </form>
           </div>
 
           <div className="w-[70%] h-[65vh] overflow-y-scroll overflow-x-hidden ml-5 scrollbar-thin scrollbar-thumb-primary-400 hidden lg:block">
-            {expenseData?.map((data) => (
-              <HistoryCard
-                key={data._id}
-                incomeId={data._id}
-                name={data.expenseName}
-                type={data.type}
-                amount={formatCurrency(data.expenseAmount)}
-                date={formatDate(data.expenseDate)}
-                description={data.expenseDescription}
-                handleDelete={handleDelete}
-              />
-            ))}
+            <div className=" justify-end flex w-full">
+              <button
+                onClick={() =>
+                  handleDelete(expenseData?.map((data) => data._id))
+                }
+                className="bg-red-700 hover:bg-red-800 text-white px-2 py-4 rounded-xl mb-10 text-center"
+              >
+                Delete All Income
+              </button>
+            </div>
+
+            {!isLoading && expenseData ? (
+              expenseData?.map((data) => (
+                <HistoryCard
+                  key={data._id}
+                  incomeId={data._id}
+                  name={data.expenseName}
+                  type={data.type}
+                  amount={formatCurrency(data.expenseAmount)}
+                  date={formatDate(data.expenseDate)}
+                  description={data.expenseDescription}
+                  handleDelete={handleDelete}
+                />
+              ))
+            ) : (
+              <Spinner className="mx-auto flex w-24 h-24" />
+            )}
           </div>
         </div>
       </div>
