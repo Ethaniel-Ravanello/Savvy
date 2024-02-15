@@ -30,7 +30,7 @@ const Page = () => {
   const getTransaction = async () => {
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/latestTransaction/${userId}`
+        `http://localhost:5000/latestTransaction?userId=${userId}&page=1&limit=7`
       );
       setTransactionData(res.data.data);
       console.log(res.data.data);
@@ -51,11 +51,9 @@ const Page = () => {
       });
       localStorage.clear();
     }
-  }, [isExpired]);
-
-  useEffect(() => {
+    console.log("i fire once");
     getTransaction();
-  });
+  }, [isExpired, userId]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -72,7 +70,7 @@ const Page = () => {
       <div className="text-white h-[calc(100vh-30px)] w-full lg:bg-Highlight rounded-[30px] px-10 py-3 lg:ml-5 overflow-y-hidden">
         <h1 className="text-2xl mb-5 mt-3.5">Transaction History</h1>
 
-        <div className="overflow-y-scroll shadow-md sm:rounded-lg h-[85vh] scrollbar-thin scrollbar-thumb-white">
+        <div className="overflow-y-scroll shadow-md bg-transparent sm:rounded-lg h-[70vh] scrollbar-thin scrollbar-thumb-white">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#222222] dark:text-gray-400 sticky top-0 z-20">
               <tr>
@@ -109,7 +107,7 @@ const Page = () => {
               </tr>
             </thead>
             <tbody className="rounded-xl">
-              {transactionData?.slice(0, 8).map((data: any) => {
+              {transactionData?.map((data: any) => {
                 return (
                   <tr
                     key={data._id}

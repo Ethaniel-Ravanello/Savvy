@@ -91,11 +91,8 @@ const Page = () => {
       });
       localStorage.clear();
     }
-  }, [isExpired]);
-
-  useEffect(() => {
     getUserData();
-  });
+  }, [isExpired, userId]);
 
   return (
     <Layout>

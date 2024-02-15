@@ -109,11 +109,9 @@ const Page = () => {
       });
       localStorage.clear();
     }
-  }, [isExpired]);
-
-  useEffect(() => {
     getData();
-  });
+  }, [isExpired, userId]);
+
   return (
     <Layout>
       <MyModal myModal={myModal} setMyModal={setMyModal} />

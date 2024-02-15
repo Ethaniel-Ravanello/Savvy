@@ -4,6 +4,10 @@ interface ExpenseResponse {
   expenseAmount: number;
   expenseName: string;
   expenseDescription: string;
+  incomeAmount: number;
+  incomeDescription: string;
+  incomeName: string;
+  createdAt: string;
 }
 
 interface TotalExpenseResponse {

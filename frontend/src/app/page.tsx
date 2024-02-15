@@ -6,8 +6,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import axios from "axios";
 
-import { IncomeResponse, TotalIncomeResponse } from "@/interfaces/Income";
-import { ExpenseResponse, TotalExpenseResponse } from "@/interfaces/Expense";
+import { IncomeResponse } from "@/interfaces/Income";
+import { ExpenseResponse } from "@/interfaces/Expense";
 import { TransactionResponse } from "@/interfaces/Latest";
 import TransactionCard from "@/components/TransactionCard";
 import { formatCurrency } from "@/hooks/useCurrency";
@@ -25,12 +25,8 @@ import {
 import { BiDollarCircle } from "react-icons/bi";
 
 const Page = () => {
-  const [latestTransaction, setLatestTransaction] =
-    useState<TransactionResponse[]>();
   const [income, setIncome] = useState<IncomeResponse[]>();
-  const [totalIncome, setTotalIncome] = useState<TotalIncomeResponse>();
   const [expense, setExpense] = useState<ExpenseResponse[]>();
-  const [totalExpense, setTotalExpense] = useState<TotalExpenseResponse>();
   const [isLoading, setIsLoading] = useState(false);
   const [myModal, setMyModal] = useState({
     isOpen: false,
@@ -48,26 +44,36 @@ const Page = () => {
   const getAllData = async () => {
     try {
       setIsLoading(true);
-      const [latestTransaction, income, totalIncome, expense, totalExpense] =
-        await axios.all([
-          axios.get(
-            `${process.env.NEXT_PUBLIC_API}/latestTransaction/${userId}`
-          ),
-          axios.get(`${process.env.NEXT_PUBLIC_API}/income/${userId}`),
-          axios.get(`${process.env.NEXT_PUBLIC_API}/total/income/${userId}`),
-          axios.get(`${process.env.NEXT_PUBLIC_API}/expense/${userId}`),
-          axios.get(`${process.env.NEXT_PUBLIC_API}/total/expense/${userId}`),
-        ]);
-      setLatestTransaction(latestTransaction.data.data);
+      const [income, expense] = await axios.all([
+        axios.get(`${process.env.NEXT_PUBLIC_API}/income/${userId}`),
+        axios.get(`${process.env.NEXT_PUBLIC_API}/expense/${userId}`),
+      ]);
       setIncome(income.data.data);
-      setTotalIncome(totalIncome.data);
       setExpense(expense.data.data);
-      setTotalExpense(totalExpense.data);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const latestTransaction: (IncomeResponse | ExpenseResponse)[] =
+    income && expense
+      ? income.concat(expense).sort((a, b) => {
+          const dateA: Date = new Date(a.createdAt);
+          const dateB: Date = new Date(b.createdAt);
+
+          return dateB.getTime() - dateA.getTime();
+        })
+      : [];
+
+  const totalIncome = income?.reduce(
+    (total: any, data: any) => total + data.incomeAmount,
+    0
+  );
+  const totalExpense = expense?.reduce(
+    (total: any, data: any) => total + data.expenseAmount,
+    0
+  );
 
   useEffect(() => {
     if (isExpired) {
@@ -81,11 +87,8 @@ const Page = () => {
       });
       localStorage.clear();
     }
-  }, [isExpired]);
-
-  useEffect(() => {
     getAllData();
-  }, [userId]);
+  }, [isExpired, userId]);
 
   return (
     <Layout>
@@ -127,7 +130,12 @@ const Page = () => {
                   <h2 className=" md:text-md mb-1">Total Income</h2>
                   {!isLoading ? (
                     <p className="md:text-2xl font-semibold">
-                      {formatCurrency(totalIncome?.data)}
+                      {formatCurrency(
+                        income?.reduce(
+                          (total: any, data: any) => total + data.incomeAmount,
+                          0
+                        )
+                      )}
                     </p>
                   ) : (
                     <Spinner className="text-neutral-100 w-10 h-10 mx-auto flex" />
@@ -143,7 +151,12 @@ const Page = () => {
                   <h2 className=" md:text-md mb-1">Total Expense</h2>
                   {!isLoading ? (
                     <p className="md:text-2xl font-semibold">
-                      {formatCurrency(totalExpense?.data)}
+                      {formatCurrency(
+                        expense?.reduce(
+                          (total: any, data: any) => total + data.expenseAmount,
+                          0
+                        )
+                      )}
                     </p>
                   ) : (
                     <Spinner className="text-neutral-100 w-10 h-10 mx-auto flex" />
