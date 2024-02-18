@@ -124,7 +124,7 @@ const Page = () => {
   }, [isExpired, userId]);
 
   return (
-    <Layout>
+    <>
       <MyModal myModal={myModal} setMyModal={setMyModal} />
       <div className="text-white h-[calc(100vh-30px)] w-full overflow-y-auto lg:bg-Highlight rounded-[30px] px-10 py-7 lg:ml-5">
         <h1 className="text-2xl mb-5 font-semibold">Expenses</h1>
@@ -228,7 +228,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

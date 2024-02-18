@@ -95,7 +95,7 @@ const Page = () => {
   }, [isExpired, userId]);
 
   return (
-    <Layout>
+    <>
       <MyModal myModal={myModal} setMyModal={setMyModal} />
       <div className="text-white lg:h-[calc(100vh-30px)] w-full md:bg-Highlight rounded-[30px] p-8 lg:ml-5">
         <h1 className="text-2xl mb-5">Edit Your Profile</h1>
@@ -212,7 +212,7 @@ const Page = () => {
           </button>
         </form>
       </div>
-    </Layout>
+    </>
   );
 };
 

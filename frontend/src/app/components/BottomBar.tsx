@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -11,6 +13,11 @@ import { GoPerson } from "react-icons/go";
 const BottomBar = () => {
   const pathname = usePathname();
   const router = useRouter();
+
+  if (pathname === "/login" || pathname === "/register") {
+    return null; // Don't render the Sidebar component
+  }
+
   return (
     <div className="w-full bottom-0 fixed bg-[#1b1c1d] rounded-t-lg h-[50px] lg:hidden">
       <div className="w-full flex justify-between px-5 mt-1.5">

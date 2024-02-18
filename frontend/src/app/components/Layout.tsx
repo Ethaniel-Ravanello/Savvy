@@ -10,8 +10,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="hidden lg:block h-[calc(100vh-30px)] Please Bisa">
         <Sidebar />
       </div>
-
       {children}
+
       <BottomBar />
     </div>
   );

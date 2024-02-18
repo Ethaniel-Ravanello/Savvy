@@ -65,7 +65,7 @@ const Page = () => {
     return formattedDate;
   };
   return (
-    <Layout>
+    <>
       <MyModal myModal={myModal} setMyModal={setMyModal} />
       <div className="text-white h-[calc(100vh-30px)] w-full lg:bg-Highlight rounded-[30px] px-10 py-3 lg:ml-5 overflow-y-hidden">
         <h1 className="text-2xl mb-5 mt-3.5">Transaction History</h1>
@@ -142,7 +142,7 @@ const Page = () => {
           </table>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

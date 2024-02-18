@@ -19,6 +19,10 @@ const Sidebar = () => {
     localStorage.clear();
     navigate.push("/login");
   };
+
+  if (pathname === "/login" || pathname === "/register") {
+    return null; // Don't render the Sidebar component
+  }
   return (
     <div className="bg-Highlight w-[250px] h-[calc(100vh-30px)] text-white rounded-[40px] px-4 py-5 overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-400">
       <div className="mt-5">

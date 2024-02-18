@@ -91,7 +91,7 @@ const Page = () => {
   }, [isExpired, userId]);
 
   return (
-    <Layout>
+    <>
       <MyModal myModal={myModal} setMyModal={setMyModal} />
       <div className="w-full">
         <div className="xl:ml-7 md:flex ">
@@ -288,7 +288,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 
