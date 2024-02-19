@@ -1,12 +1,11 @@
 import React from "react";
 
 import ExpensePage from "./ExpensePage";
-const Page = () => {
+
+export default async function Page() {
   return (
     <>
       <ExpensePage />
     </>
   );
-};
-
-export default Page;
+}

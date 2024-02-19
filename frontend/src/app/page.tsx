@@ -47,7 +47,7 @@ const Page = () => {
 
   const latestTransaction: (IncomeResponse | ExpenseResponse)[] =
     incomeData && expenseData
-      ? incomeData.concat(expense).sort((a: any, b: any) => {
+      ? incomeData.concat(expenseData).sort((a: any, b: any) => {
           const dateA: Date = new Date(a.createdAt);
           const dateB: Date = new Date(b.createdAt);
 
