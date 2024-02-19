@@ -7,7 +7,6 @@ import axios from "axios";
 
 import { HistoryResponse } from "@/interfaces/Latest";
 import { formatCurrency } from "@/hooks/useCurrency";
-import Layout from "@/components/Layout";
 
 const MyModal = dynamic(() => import("@/components/Modal"));
 

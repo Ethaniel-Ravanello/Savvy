@@ -11,7 +11,6 @@ import { formatDate, converMongoDbDate } from "@/hooks/useDate";
 import { IncomeCard } from "@/interfaces/Income";
 import { formatCurrency } from "@/hooks/useCurrency";
 
-import Layout from "@/components/Layout";
 import Spinner from "../components/Spinner";
 
 const HistoryCard = dynamic(() => import("@/components/HistoryCard"));

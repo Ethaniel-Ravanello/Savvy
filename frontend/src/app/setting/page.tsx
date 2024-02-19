@@ -5,8 +5,6 @@ import dynamic from "next/dynamic";
 import { useExpiredToken, useUserId } from "@/hooks/useToken";
 import axios from "axios";
 
-import Layout from "@/components/Layout";
-
 const MyModal = dynamic(() => import("@/components/Modal"));
 
 const Page = () => {

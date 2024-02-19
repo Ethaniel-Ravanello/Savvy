@@ -66,7 +66,7 @@ const RegisterPage = () => {
   };
   return (
     <>
-      <div className="py-5 mx-auto w-[30%]">
+      <div className="py-5 mx-auto w-full">
         <MyModal myModal={myModal} setMyModal={setMyModal} />
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
           <div className="w-full bg-Highlight rounded-lg shadow text-white  md:mt-0 sm:max-w-md xl:p-0">

@@ -1,17 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useExpiredToken, useUserId } from "./hooks/useToken";
+import { useGetIncome, useGetExpense } from "./libs/api";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import axios from "axios";
 
 import { IncomeResponse } from "@/interfaces/Income";
 import { ExpenseResponse } from "@/interfaces/Expense";
 import { TransactionResponse } from "@/interfaces/Latest";
 import TransactionCard from "@/components/TransactionCard";
 import { formatCurrency } from "@/hooks/useCurrency";
-import Layout from "@/components/Layout";
 import Charts from "@/components/Chart";
 import Spinner from "@/components/Spinner";
 
@@ -25,9 +24,6 @@ import {
 import { BiDollarCircle } from "react-icons/bi";
 
 const Page = () => {
-  const [income, setIncome] = useState<IncomeResponse[]>();
-  const [expense, setExpense] = useState<ExpenseResponse[]>();
-  const [isLoading, setIsLoading] = useState(false);
   const [myModal, setMyModal] = useState({
     isOpen: false,
     header: "",
@@ -41,39 +37,23 @@ const Page = () => {
   const isExpired = useExpiredToken();
   const navigate = useRouter();
 
-  const getAllData = async () => {
-    try {
-      setIsLoading(true);
-      const [income, expense] = await axios.all([
-        axios.get(`${process.env.NEXT_PUBLIC_API}/income/${userId}`),
-        axios.get(`${process.env.NEXT_PUBLIC_API}/expense/${userId}`),
-      ]);
-      setIncome(income.data.data);
-      setExpense(expense.data.data);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { income, totalIncome, isLoadingIncome, errorIncome } =
+    useGetIncome(userId);
+  const { expense, totalExpense, isLoadingExpense, errorExpense } =
+    useGetExpense(userId);
+
+  const incomeData = income?.data;
+  const expenseData = expense?.data;
 
   const latestTransaction: (IncomeResponse | ExpenseResponse)[] =
-    income && expense
-      ? income.concat(expense).sort((a, b) => {
+    incomeData && expenseData
+      ? incomeData.concat(expense).sort((a: any, b: any) => {
           const dateA: Date = new Date(a.createdAt);
           const dateB: Date = new Date(b.createdAt);
 
           return dateB.getTime() - dateA.getTime();
         })
       : [];
-
-  const totalIncome = income?.reduce(
-    (total: any, data: any) => total + data.incomeAmount,
-    0
-  );
-  const totalExpense = expense?.reduce(
-    (total: any, data: any) => total + data.expenseAmount,
-    0
-  );
 
   useEffect(() => {
     if (isExpired) {
@@ -87,8 +67,7 @@ const Page = () => {
       });
       localStorage.clear();
     }
-    getAllData();
-  }, [isExpired, userId]);
+  }, [isExpired]);
 
   return (
     <>
@@ -96,7 +75,7 @@ const Page = () => {
       <div className="w-full">
         <div className="xl:ml-7 md:flex ">
           <div className="mx-auto align-middle mb-2 hidden xl:flex items-center lg:ml-7 mt-10">
-            {!isLoading ? (
+            {!isLoadingIncome && !isLoadingExpense ? (
               <Charts
                 income={totalIncome ?? 0}
                 expense={totalExpense ?? 0}
@@ -128,10 +107,10 @@ const Page = () => {
                 </div>
                 <div>
                   <h2 className=" md:text-md mb-1">Total Income</h2>
-                  {!isLoading ? (
+                  {!isLoadingIncome ? (
                     <p className="md:text-2xl font-semibold">
                       {formatCurrency(
-                        income?.reduce(
+                        incomeData?.reduce(
                           (total: any, data: any) => total + data.incomeAmount,
                           0
                         )
@@ -149,10 +128,10 @@ const Page = () => {
                 </div>
                 <div>
                   <h2 className=" md:text-md mb-1">Total Expense</h2>
-                  {!isLoading ? (
+                  {!isLoadingExpense ? (
                     <p className="md:text-2xl font-semibold">
                       {formatCurrency(
-                        expense?.reduce(
+                        expenseData?.reduce(
                           (total: any, data: any) => total + data.expenseAmount,
                           0
                         )
@@ -170,7 +149,7 @@ const Page = () => {
                 Latest Transaction
               </h2>
               <div className="h-[40vh] md:h-[30vh] overflow-y-scroll scrollbar-thin scrollbar-thumb-white">
-                {!isLoading ? (
+                {!isLoadingIncome && !isLoadingExpense ? (
                   latestTransaction
                     ?.sort()
                     .map((data: TransactionResponse, idx) => (
@@ -236,8 +215,8 @@ const Page = () => {
               </div>
 
               <div className="overflow-y-scroll h-[200px] lg:h-[180px] scrollbar-thin scrollbar-thumb-white">
-                {!isLoading ? (
-                  income?.map((data, idx) => (
+                {!isLoadingIncome ? (
+                  incomeData?.map((data: IncomeResponse, idx: number) => (
                     <div key={idx} className="bg-Highlight rounded-lg mt-3">
                       <TransactionCard
                         amount={formatCurrency(data.incomeAmount)}
@@ -268,8 +247,8 @@ const Page = () => {
               </div>
 
               <div className="overflow-y-scroll h-[200px] lg:h-[180px] scrollbar-thin scrollbar-thumb-white">
-                {!isLoading ? (
-                  expense?.map((data, idx) => (
+                {!isLoadingExpense ? (
+                  expenseData?.map((data: IncomeResponse, idx: number) => (
                     <div key={idx} className="bg-Highlight rounded-lg mt-3">
                       <TransactionCard
                         amount={formatCurrency(data.expenseAmount)}
