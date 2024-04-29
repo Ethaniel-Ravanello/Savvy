@@ -1,17 +1,86 @@
-const Income = require("../Models/Income.js");
+const Transaction = require("../Models/Transaction.js");
+
+function getCategoryColor(category) {
+  switch (category) {
+    case "Traveling":
+      return "#2563EB";
+    case "Gasoline":
+      return "#DC2626";
+    case "Education":
+      return "#3366CC";
+    case "Fixes":
+      return "#006400";
+    case "Food And Drink":
+      return "#FF8601";
+    case "Freelancing":
+      return "#4CAF50";
+    case "Gift":
+      return "#60a5fa";
+    case "Hangout":
+      return "#FFA500";
+    case "Hobbies":
+      return "#800080";
+    case "Home":
+      return "#F5F5DC";
+    case "Insurance":
+      return "#FF4500";
+    case "Investments":
+      return "#673AB7";
+    case "Loan":
+      return "#FF9800";
+    case "Movies":
+      return "#6A0DAD";
+    case "Other":
+      return "#9E9E9E";
+    case "Paycheck":
+      return "#4CAF50";
+    case "Rent":
+      return "#228B22";
+    case "Savings":
+      return "#20B2AA";
+    case "Shopping":
+      return "#4CA83D";
+    case "Subscription":
+      return "#C53030";
+    case "Transportation":
+      return "#805AD5";
+    case "Utilites":
+      return "#FFA500";
+    case "Verhicle":
+      return "#C0C0C0";
+  }
+}
 
 const getIncome = async (req, res) => {
   const { userId } = req.params;
   try {
-    const response = await Income.find({ userId: userId }).sort({
-      createdAt: -1,
+    const response = await Transaction.find({
+      userId: userId,
+      transactionType: "Income",
     });
+
+    const groupedIncomes = response.reduce((groups, transaction) => {
+      const date = new Date(transaction.transactionDate);
+      const dateString = date.toISOString().split("T")[0];
+      if (!groups[dateString]) {
+        groups[dateString] = [];
+      }
+      groups[dateString].push(transaction);
+      return groups;
+    }, {});
+
+    const sortedGroupedTransactions = Object.keys(groupedIncomes)
+      .sort((a, b) => new Date(b) - new Date(a))
+      .reduce((obj, key) => {
+        obj[key] = groupedIncomes[key];
+        return obj;
+      }, {});
 
     return res.status(200).json({
       status: res.statusCode,
       error: false,
       message: "Succesfully Get All Income Data",
-      data: response,
+      data: sortedGroupedTransactions,
     });
   } catch {
     return res.status(500).json({
@@ -22,26 +91,54 @@ const getIncome = async (req, res) => {
   }
 };
 
-const getIncomeById = async (req, res) => {
-  const { userId, id } = req.params;
+const getTopIncome = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const response = await Income.findOne({ userId: userId, _id: id });
+    const response = await Transaction.find({
+      userId: userId,
+      transactionType: "Income",
+    }).sort({ transactionAmount: -1 });
 
-    if (!response) {
-      return "No Data";
-    }
+    const totalIncome = response.reduce(
+      (total, income) => total + income.transactionAmount,
+      0
+    );
+
+    const categoryMap = new Map();
+    response.forEach((transaction) => {
+      const { transactionCategory, transactionAmount } = transaction;
+      if (categoryMap.has(transactionCategory)) {
+        categoryMap.set(transactionCategory, {
+          amount:
+            categoryMap.get(transactionCategory).amount + transactionAmount,
+        });
+      } else {
+        categoryMap.set(transactionCategory, { amount: transactionAmount });
+      }
+    });
+
+    const dataWithSummedCategories = Array.from(categoryMap).map(
+      ([category, { amount }]) => ({
+        transactionCategory: category,
+        transactionAmount: amount,
+        percentageOfTotalIncome: Math.round((amount / totalIncome) * 100),
+        categoryColor: getCategoryColor(category),
+      })
+    );
 
     return res.status(200).json({
       status: res.statusCode,
       error: false,
-      message: "Succesfully Get Income Data",
-      data: response,
+      message: "Succesfully Get Income",
+      incomeAmount: totalIncome,
+      data: dataWithSummedCategories.slice(0, 5),
     });
-  } catch {
+  } catch (error) {
+    console.error("Error fetching income data:", error);
     return res.status(500).json({
-      status: res.statusCode,
+      status: 500,
       error: true,
-      message: "Internal Server Error",
+      message: "An error occurred while fetching income data.",
     });
   }
 };
@@ -49,9 +146,10 @@ const getIncomeById = async (req, res) => {
 const updateIncomeById = async (req, res) => {
   const { userId, updatedData } = req.body;
   try {
-    const response = await Income.findOne({
+    const response = await Transaction.findOne({
       _id: req.params.id,
       userId: userId,
+      transactionType: "Income",
     });
 
     response.set(updatedData);
@@ -74,7 +172,8 @@ const updateIncomeById = async (req, res) => {
 
 const createIncome = async (req, res) => {
   try {
-    const newIncome = new Income(req.body);
+    const newIncome = new Transaction(req.body);
+    console.log(newIncome);
     const saveIncome = await newIncome.save();
 
     return res.status(200).json({
@@ -94,7 +193,7 @@ const createIncome = async (req, res) => {
 
 const deleteIncomeById = async (req, res) => {
   try {
-    await Income.deleteMany({ _id: { $in: req.body.ids } });
+    await Transaction.deleteMany({ _id: { $in: req.body.ids } });
     return res.status(200).json({
       status: res.statusCode,
       error: false,
@@ -105,33 +204,8 @@ const deleteIncomeById = async (req, res) => {
   }
 };
 
-const getTotalIncome = async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const response = await Income.find({ userId: userId });
-    const totalIncome = response.reduce(
-      (total, income) => total + income.incomeAmount,
-      0
-    );
-
-    return res.status(200).json({
-      status: res.statusCode,
-      error: false,
-      message: "Succesfully Get Total Income",
-      data: totalIncome,
-    });
-  } catch {
-    return res.status(500).json({
-      status: res.statusCode,
-      error: true,
-      message: "Internal Server Error",
-    });
-  }
-};
-
 exports.getIncome = getIncome;
-exports.getIncomeById = getIncomeById;
 exports.createIncome = createIncome;
+exports.getTopIncome = getTopIncome;
 exports.updateIncomeById = updateIncomeById;
 exports.deleteIncomeById = deleteIncomeById;
-exports.getTotalIncome = getTotalIncome;

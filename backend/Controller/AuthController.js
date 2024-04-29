@@ -51,7 +51,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const existUser = await Users.findOne({ email: email });
-    console.log(existUser);
+
     if (!existUser) {
       return res.status(400).json({
         status: res.statusCode,
@@ -79,6 +79,7 @@ const login = async (req, res) => {
       error: false,
       message: "Login Succesful",
       userId: existUser._id,
+      firstName: existUser.firstName,
       token: token,
     });
   } catch {
