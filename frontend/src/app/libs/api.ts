@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -8,40 +8,81 @@ const fetcher = async (url: string) => {
   return res.json();
 };
 
-export function useGetIncome(userId: string | null) {
+export function useGetTransaction(userId: string | null, isExpired: boolean) {
+  const canIFetch = userId && isExpired !== null;
+
   const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API}/income/${userId}`,
+    canIFetch ? `http://localhost:5000/latestTransaction/${userId}` : null,
     fetcher
   );
 
-  const totalIncome = data?.data?.reduce(
-    (total: any, data: any) => total + data.incomeAmount,
-    0
+  return {
+    historyTransaction: data,
+    isLoadingHistory: isLoading,
+    errorHistory: error,
+  };
+}
+
+export function useGetIncome(userId: string | null, isExpired: boolean) {
+  const canIFetch = userId && isExpired !== null;
+
+  const { data, error, isLoading } = useSWR(
+    canIFetch ? `http://localhost:5000/income/${userId}` : null,
+    fetcher
   );
 
   return {
     income: data,
-    totalIncome: totalIncome,
     errorIncome: error,
     isLoadingIncome: isLoading,
+    mutateIncome: () => mutate(`http://localhost:5000/income/${userId}`),
   };
 }
 
-export function useGetExpense(userId: string | null) {
+export function useGetTopIncome(userId: string | null, isExpired: boolean) {
+  const canIFetch = userId && isExpired !== null;
+
   const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API}/expense/${userId}`,
+    canIFetch ? `http://localhost:5000/topIncome/${userId}` : null,
     fetcher
   );
 
-  const totalExpense = data?.data?.reduce(
-    (total: any, data: any) => total + data.expenseAmount,
-    0
+  return {
+    topIncome: data,
+    errorTopIncome: error,
+    topIncomeLoading: isLoading,
+    mutateTopIncome: () => mutate(`http://localhost:5000/topIncome/${userId}`),
+  };
+}
+
+export function useGetExpense(userId: string | null, isExpired: boolean) {
+  const canIFetch = userId && isExpired !== null;
+
+  const { data, error, isLoading } = useSWR(
+    canIFetch ? `http://localhost:5000/expense/${userId}` : null,
+    fetcher
   );
 
   return {
     expense: data,
-    totalExpense: totalExpense,
     errorExpense: error,
     isLoadingExpense: isLoading,
+    mutateData: () => mutate(`http://localhost:5000/expense/${userId}`),
+  };
+}
+
+export function useGetTopExpense(userId: string | null, isExpired: boolean) {
+  const canIFetch = userId && isExpired !== null;
+
+  const { data, error, isLoading } = useSWR(
+    canIFetch ? `http://localhost:5000/topExpense/${userId}` : null,
+    fetcher
+  );
+
+  return {
+    topExpense: data,
+    errorTopExpense: error,
+    isLoadingTopExpense: isLoading,
+    mutateDataTop: () => mutate(`http://localhost:5000/topExpense/${userId}`),
   };
 }

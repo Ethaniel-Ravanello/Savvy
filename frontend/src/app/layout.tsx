@@ -18,10 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="lg:flex m-0 lg:p-3">
-        <div className="hidden lg:block h-[calc(100vh-30px)]">
+      <body className="lg:flex m-0 lg:p-3 lg:pr-5">
+        <div className="hidden lg:block lg:h-[calc(100vh-30px)] lg:sticky lg:top-0">
           <Sidebar />
         </div>
+
         {children}
         <BottomBar />
       </body>

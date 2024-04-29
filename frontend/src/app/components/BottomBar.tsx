@@ -19,39 +19,39 @@ const BottomBar = () => {
   }
 
   return (
-    <div className="w-full bottom-0 fixed bg-[#1b1c1d] rounded-t-lg h-[50px] lg:hidden">
+    <div className="w-full bottom-0 fixed bg-primary-900 rounded-t-lg h-[50px] lg:hidden">
       <div className="w-full flex justify-between px-5 mt-1.5">
         <BsHouse
           onClick={() => router.push("/")}
           className={`${
-            pathname === "/" ? "text-white" : "text-slate-600"
+            pathname === "/" ? "text-white" : "text-primary-700"
           } w-6 h-6 my-auto`}
         />
-        <GoPerson
+        {/* <GoPerson
           onClick={() => router.push("/setting")}
           className={`${
-            pathname === "/setting" ? "text-white" : "text-slate-600"
+            pathname === "/setting" ? "text-white" : "text-primary-700"
           } w-6 h-6 my-auto`}
-        />
+        /> */}
         <div
           onClick={() => {
             router.push("/login");
             localStorage.clear();
           }}
-          className="p-2 bg-white rounded-full"
+          className="p-2 rounded-full"
         >
-          <VscSignOut className="w-6 h-6 text-slate-950" />
+          <VscSignOut className="w-6 h-6 text-primary-700" />
         </div>
         <IoMdArrowRoundDown
           onClick={() => router.push("/expenses")}
           className={`${
-            pathname === "/expenses" ? "text-white" : "text-slate-600"
+            pathname === "/expenses" ? "text-white" : "text-primary-700"
           } w-6 h-6 my-auto`}
         />
         <IoMdArrowRoundUp
           onClick={() => router.push("/incomes")}
           className={`${
-            pathname === "/incomes" ? "text-white" : "text-slate-600"
+            pathname === "/incomes" ? "text-white" : "text-primary-700"
           } w-6 h-6 my-auto`}
         />
       </div>

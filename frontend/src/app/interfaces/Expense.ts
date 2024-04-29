@@ -1,9 +1,11 @@
 interface ExpenseResponse {
+  _id: number;
   id: number;
   type: string;
   expenseAmount: number;
   expenseName: string;
   expenseDescription: string;
+  expenseDate: string;
   incomeAmount: number;
   incomeDescription: string;
   incomeName: string;

@@ -104,12 +104,12 @@ const LoginPage = () => {
                   disabled={isLoading}
                   onClick={handleSubmit}
                   className={`w-full text-white flex justify-center ${
-                    isLoading ? "bg-slate-700" : "bg-primary"
+                    isLoading ? "bg-slate-700" : "bg-primary-50"
                   }  active:bg-primary-click hover:bg-primary-hover focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
                 >
                   <p
                     className={` ${
-                      isLoading ? "text-gray-400 ml-10" : "text-white"
+                      isLoading ? "text-gray-400 ml-10" : "text-primary-1000"
                     }`}
                   >
                     Sign in
@@ -120,10 +120,10 @@ const LoginPage = () => {
                     ""
                   )}
                 </button>
-                <p className="text-sm font-light text-white">
+                <p className="text-sm font-medium text-white">
                   Dont Have An Account Yet?
                   <Link
-                    className="font-medium text-primary-600 hover:underline ml-2"
+                    className="font-medium text-primary-400 hover:underline ml-2"
                     href="/register"
                   >
                     Sign up
