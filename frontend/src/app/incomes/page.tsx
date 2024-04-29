@@ -83,9 +83,10 @@ const Page = () => {
           data?.transactionAmount?.replace("IDR", "").replace(/,/g, "")
         ),
       });
-
-      mutateIncome();
-      mutateTopIncome();
+      setTimeout(() => {
+        mutateIncome();
+        mutateTopIncome();
+      }, 500);
       setIsLoadingCreate(false);
     } catch (error) {
       setIsLoadingCreate(false);
@@ -249,7 +250,7 @@ const Page = () => {
                 <button
                   disabled={isLoadingCreate}
                   className={`${
-                    isLoadingCreate ? "bg-gray-600" : "bg-white"
+                    isLoadingCreate ? "bg-primary-800" : "bg-white"
                   } text-black rounded-lg py-1.5 px-2 my-5 font-medium flex`}
                 >
                   <p className="mt-0.5">Submit</p>

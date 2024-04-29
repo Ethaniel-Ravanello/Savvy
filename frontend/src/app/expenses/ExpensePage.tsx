@@ -81,8 +81,11 @@ const ExpensePage = () => {
           data?.transactionAmount?.replace("IDR", "").replace(/,/g, "")
         ),
       });
+      setTimeout(() => {
+        mutateData();
+        mutateDataTop();
+      }, 500);
       setIsLoadingCreate(false);
-      mutateData();
     } catch (error) {
       setIsLoadingCreate(false);
       console.log(error);
@@ -261,7 +264,7 @@ const ExpensePage = () => {
                   <p className="mt-0.5">Submit</p>
                   {isLoadingCreate ? (
                     <div className=" ml-3 mt-1">
-                      <Spinner className="w-5 h-5" />
+                      <Spinner className="w-5 h-5 text-white" />
                     </div>
                   ) : (
                     ""
