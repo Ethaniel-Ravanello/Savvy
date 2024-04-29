@@ -73,7 +73,7 @@ const Page = () => {
     e.preventDefault();
     try {
       console.log(data);
-      axios.post(`http://localhost:5000/income`, {
+      axios.post(`${process.env.NEXT_PUBLIC_API}/income`, {
         userId: userId,
         transactionType: "Income",
         transactionCategory: data.transactionCategory.category,

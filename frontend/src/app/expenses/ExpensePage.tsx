@@ -71,7 +71,7 @@ const ExpensePage = () => {
     console.log(data);
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/expense`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API}/expense`, {
         userId: userId,
         transactionType: "Expense",
         transactionCategory: data.transactionCategory.category,
