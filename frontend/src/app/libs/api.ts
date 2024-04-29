@@ -12,7 +12,9 @@ export function useGetTransaction(userId: string | null, isExpired: boolean) {
   const canIFetch = userId && isExpired !== null;
 
   const { data, error, isLoading } = useSWR(
-    canIFetch ? `http://localhost:5000/latestTransaction/${userId}` : null,
+    canIFetch
+      ? `${process.env.NEXT_PUBLIC_API}/latestTransaction/${userId}`
+      : null,
     fetcher
   );
 
@@ -27,7 +29,7 @@ export function useGetIncome(userId: string | null, isExpired: boolean) {
   const canIFetch = userId && isExpired !== null;
 
   const { data, error, isLoading } = useSWR(
-    canIFetch ? `http://localhost:5000/income/${userId}` : null,
+    canIFetch ? `${process.env.NEXT_PUBLIC_API}/income/${userId}` : null,
     fetcher
   );
 
@@ -35,7 +37,8 @@ export function useGetIncome(userId: string | null, isExpired: boolean) {
     income: data,
     errorIncome: error,
     isLoadingIncome: isLoading,
-    mutateIncome: () => mutate(`http://localhost:5000/income/${userId}`),
+    mutateIncome: () =>
+      mutate(`${process.env.NEXT_PUBLIC_API}/income/${userId}`),
   };
 }
 
@@ -43,7 +46,7 @@ export function useGetTopIncome(userId: string | null, isExpired: boolean) {
   const canIFetch = userId && isExpired !== null;
 
   const { data, error, isLoading } = useSWR(
-    canIFetch ? `http://localhost:5000/topIncome/${userId}` : null,
+    canIFetch ? `${process.env.NEXT_PUBLIC_API}/topIncome/${userId}` : null,
     fetcher
   );
 
@@ -51,7 +54,8 @@ export function useGetTopIncome(userId: string | null, isExpired: boolean) {
     topIncome: data,
     errorTopIncome: error,
     topIncomeLoading: isLoading,
-    mutateTopIncome: () => mutate(`http://localhost:5000/topIncome/${userId}`),
+    mutateTopIncome: () =>
+      mutate(`${process.env.NEXT_PUBLIC_API}/topIncome/${userId}`),
   };
 }
 
@@ -59,7 +63,7 @@ export function useGetExpense(userId: string | null, isExpired: boolean) {
   const canIFetch = userId && isExpired !== null;
 
   const { data, error, isLoading } = useSWR(
-    canIFetch ? `http://localhost:5000/expense/${userId}` : null,
+    canIFetch ? `${process.env.NEXT_PUBLIC_API}/expense/${userId}` : null,
     fetcher
   );
 
@@ -67,7 +71,8 @@ export function useGetExpense(userId: string | null, isExpired: boolean) {
     expense: data,
     errorExpense: error,
     isLoadingExpense: isLoading,
-    mutateData: () => mutate(`http://localhost:5000/expense/${userId}`),
+    mutateData: () =>
+      mutate(`${process.env.NEXT_PUBLIC_API}/expense/${userId}`),
   };
 }
 
@@ -75,7 +80,7 @@ export function useGetTopExpense(userId: string | null, isExpired: boolean) {
   const canIFetch = userId && isExpired !== null;
 
   const { data, error, isLoading } = useSWR(
-    canIFetch ? `http://localhost:5000/topExpense/${userId}` : null,
+    canIFetch ? `${process.env.NEXT_PUBLIC_API}/${userId}` : null,
     fetcher
   );
 
@@ -83,6 +88,7 @@ export function useGetTopExpense(userId: string | null, isExpired: boolean) {
     topExpense: data,
     errorTopExpense: error,
     isLoadingTopExpense: isLoading,
-    mutateDataTop: () => mutate(`http://localhost:5000/topExpense/${userId}`),
+    mutateDataTop: () =>
+      mutate(`${process.env.NEXT_PUBLIC_API}/topExpense/${userId}`),
   };
 }
