@@ -80,7 +80,7 @@ export function useGetTopExpense(userId: string | null, isExpired: boolean) {
   const canIFetch = userId && isExpired !== null;
 
   const { data, error, isLoading } = useSWR(
-    canIFetch ? `${process.env.NEXT_PUBLIC_API}/${userId}` : null,
+    canIFetch ? `${process.env.NEXT_PUBLIC_API}/topExpense/${userId}` : null,
     fetcher
   );
 
